@@ -1,0 +1,13 @@
+Metadata-Version: 2.4
+Name: EnlineDevEng
+Version: 0.1.0
+Summary: Biblioteca orientada a objetos para modelagem e simulação de redes elétricas de transmissão.
+Author-email: Iuri <lorenzop0o9i8u7@gmail.com>
+License: MIT
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: numpy>=1.22.0
+Requires-Dist: scipy>=1.8.0
+Requires-Dist: pandas>=1.4.0
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0.0; extra == "dev"
