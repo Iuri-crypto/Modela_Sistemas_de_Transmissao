@@ -12,14 +12,14 @@ class ADict(dict):
         try:
             return self[item]
         except KeyError:
-            raise AttributeError(f"'PowerSystemsNet' não possui o atributo '{item}'")
+            raise AttributeError(f"'EnlineDevEngNet' não possui o atributo '{item}'")
                     
     def __setattr__(self, key, value):
         self[key] = value 
 
 
 
-class PowerSystemsNet(ADict):
+class EnlineDevEngNet(ADict):
     """
     Construtor do PowerSystems
     O dicionário fornecido precisa conter os dataframes

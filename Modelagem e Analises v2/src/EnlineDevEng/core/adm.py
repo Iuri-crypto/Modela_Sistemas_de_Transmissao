@@ -101,11 +101,12 @@ class BaseNetworkParser(ABC):
             
     
     @classmethod
-    def get_parser(cls, extension: str) -> BaseNetworkParser:
+    def get_parser(cls, file_path: Path) -> BaseNetworkParser:
         """
         Instancia o parser adequado baseado na extensão
         do arquivo.
         """
+        extension = file_path.suffix.lstrip(".")
         
         return cls._registry[extension]()
     
@@ -115,6 +116,61 @@ class BaseNetworkParser(ABC):
         """
         Executa a leitura linha por linha do arquivo e 
         envia as informações para 'net'
+        """
+        
+        pass 
+    
+    
+    
+
+class BaseNetworkFileBuilder(ABC):
+    """
+    Classe abstrata responsável pela seleção
+    de qual file_builder a ser usado 
+    para a injeção dos dados na estrutura aceita
+    pela modelagem.
+    
+    Exemplo: Arquivos .pwf têm um conjunto de informações
+             Arquivos .dss têm outro conjunto de informações
+             ...
+             
+             Desta forma para cada escopo fornecido de informações
+             seja em formato (.pwf, .dss, ...) seleciona-se file_builder
+             adequado para varrer as informações.
+    """
+    
+    _registry: Dict[str, Type[BaseNetworkFileBuilder]] = {}
+    extensions = list[str] = []
+    
+    
+    def __init_subclass__(cls, **kwargs):
+        """
+        Registra automaticamente os builders com base
+        nas extensões suportadas.
+        """
+        super().__init_subclass__(**kwargs)
+        
+        for ext in getattr(cls, "extensions", []):
+            ext_key = ext.lower().strip()
+            cls._registry[ext_key] = cls 
+            
+    
+    @classmethod
+    def get_builder(cls, file_path: Path) -> BaseNetworkFileBuilder:
+        """
+        Instancia o parser adequado baseado na extensão
+        do arquivo.
+        """
+        extension = file_path.suffix.lstrip(".")
+        
+        return cls._registry[extension]()
+    
+
+    @abstractmethod
+    def network_build(self, net: Any, ede: Any):
+        """
+        Popula o objeto 'net' com todas as tabelas extraídas
+        do Arquivo de entrada.
         """
         
         pass 

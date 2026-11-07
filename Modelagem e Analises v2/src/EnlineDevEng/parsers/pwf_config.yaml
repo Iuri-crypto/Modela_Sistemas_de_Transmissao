@@ -1,0 +1,402 @@
+
+
+
+# INCOMPLETO (ISTO É: NÃO CONTÉM TODOS OS MNEMÔNICOS DO ANAREDE)
+regras_gerais:
+
+
+
+  - df_alvo: "dbarDF"
+    coluna_merge_alvo: "grupo_de_base_de_tensao"
+    df_auxiliar: "dgbtDF"
+    coluna_merge_auxiliar: "grupo"
+    colunas_coletar:
+      - tensao: "tensao_base"
+    valores_padrao_merge: # Nem todos são valores adotados pelo ANAREDE
+      tensao: 1.0
+        
+
+  - df_alvo: "dbarDF"
+    coluna_merge_alvo: "grupo_de_limite_de_tensao"
+    df_auxiliar: "dgltDF"
+    coluna_merge_auxiliar: "grupo"
+    colunas_coletar:
+      - limite_minimo: limite_minimo
+      - limite_maximo: limite_maximo
+      - limite_minimo_em_emergencia: limite_minimo_em_emergencia
+      - limite_maximo_em_emergencia: limite_maximo_em_emergencia
+    valores_padrao_merge:
+      limite_minimo: 0.8 # Adotado pelo Anarede
+      limite_maximo: 1.2 # Adotado pelo Anarede
+      limite_minimo_em_emergencia: 0.8 # Adotado pelo Anarede
+      limite_maximo_em_emergencia: 1.2 # Adotado pelo Anarede
+
+  
+  - df_alvo: "dbarDF"
+    coluna_merge_alvo: "numero"
+    df_auxiliar: "dgerDF"
+    coluna_merge_auxiliar: "numero"
+    colunas_coletar:
+      - geracao_ativa_minima: geracao_ativa_minima
+      - geracao_ativa_maxima: geracao_ativa_maxima
+      - fator_de_participacao: fator_de_participacao
+      - fator_de_potencia_nominal: fator_de_potencia_nominal
+      - reatancia_de_maquina: reatancia_de_maquina
+    valores_padrao_merge:
+      geracao_ativa_minima: 0.0 # Adotado pelo Anarede
+      geracao_ativa_maxima: 99999 # Adotado pelo Anarede
+      fator_de_participacao: 0.0 # Adotado pelo Anarede
+      fator_de_potencia_nominal: 1.0 # Adotado pelo Desenvolvedor
+      reatancia_de_maquina: 100 # Adotado pelo Desenvolvedor
+
+
+
+  - df_alvo: "dlinDF"
+    coluna_merge_alvo: "para"
+    df_auxiliar: "dbarDF"
+    coluna_merge_auxiliar: "numero"
+    colunas_coletar:
+      - tensao_minima: tensao_minima
+      - tensao_maxima: tensao_maxima
+    valores_padrao_merge:
+      tensao_minima: 0.8 # Adotado pelo Anarede
+      tensao_maxima: 1.2 # Adotado pelo Anarede
+      
+
+
+
+
+
+# (COMPLETO PARA TODOS OS MNEMÔNICOS DO ANARAREDE)
+regras_individuais:
+
+  # - df_alvo: "dbshDF"
+  #   valores_padrao_df_alvo: # Todos são valores adotados pelo ANAREDE
+  #     operacao: "A"
+  #     circuito: 1
+  #     modo_de_controle: "F"
+  #     injecao_reativa_inicial: 0.0
+  #     tipo_de_controle: "C"
+  #     apagar_dados_dbar: "N"
+  #     estado: "L"
+  #     unidades: 1
+  #     unidades_em_operacao: 1
+  #     manobravel: "S"
+  #   regras_valores_padrao_df_alvo_tipo_1:
+  #   regras_valores_padrao_df_alvo_tipo_2:
+  #     - coluna_alvo_1: "barra_controlada"
+  #       coluna_auxiliar: "da_barra"
+
+
+
+  # - df_alvo: "dagaDF"
+  #   valores_padrao_df_alvo: # Todos são valores adotados pelo ANAREDE
+  #     fator_de_geracao_ativa: 0.0
+  #   regras_valores_padrao_df_alvo_tipo_1:
+  #   regras_valores_padrao_df_alvo_tipo_2:
+      
+
+  # - df_alvo: "daebDF"
+  #   valores_padrao_df_alvo: # Todos são valores adotados pelo ANAREDE
+  #   regras_valores_padrao_df_alvo_tipo_1:
+  #   regras_valores_padrao_df_alvo_tipo_2:
+      
+          
+
+  # - df_alvo: "dagrDF"
+  #   valores_padrao_df_alvo: # Todos são valores adotados pelo ANAREDE
+  #     operacao: "A"
+  #   regras_valores_padrao_df_alvo_tipo_1:
+  #   regras_valores_padrao_df_alvo_tipo_2:
+      
+        
+
+  # - df_alvo: "dancDF"
+  #   valores_padrao_df_alvo: # Todos são valores adotados pelo ANAREDE
+  #     fator_de_carga_ativa: 0.0
+  #     fator_de_carga_reativa: 0.0
+  #     fator_shunt: 0.0
+  #   regras_valores_padrao_df_alvo_tipo_1:
+  #   regras_valores_padrao_df_alvo_tipo_2:
+     
+
+
+  # - df_alvo: "dareDF"
+  #   valores_padrao_df_alvo: # Todos são valores adotados pelo ANAREDE
+  #     intercambio_liquido: 0.0
+  #     intercambio_minimo: 0.0
+  #     intercambio_maximo: 0.0
+  #   regras_valores_padrao_df_alvo_tipo_1:
+  #   regras_valores_padrao_df_alvo_tipo_2:
+    
+
+
+  - df_alvo: "dbarDF"
+    valores_padrao_df_alvo: # Todos são valores adotados pelo ANAREDE
+      estado: "L"
+      tipo: 0
+      grupo_de_base_de_tensao: 0
+      grupo_de_limite_de_tensao: 0
+      tensao: 1.0
+      angulo: 0.0
+      geracao_ativa: 0.0
+      geracao_reativa: 0.0
+      carga_ativa: 0.0
+      carga_reativa: 0.0
+      capacitor_reator: 0.0
+      area: 1
+      tensao_para_definicao_de_carga: 1.0
+    regras_valores_padrao_df_alvo_tipo_1:
+      - coluna_alvo_1: "geracao_reativa_minima"
+        condicao:
+          coluna_dependente: "tipo"
+          operador: "=="
+          valor: 2
+        valor_se_verdadeiro: -9999.0
+        valor_se_falso: 0.0
+      - coluna_alvo_2: "geracao_reativa_maxima"
+        condicao:
+          coluna_dependente: "tipo"
+          operador: "=="
+          valor: 2
+        valor_se_verdadeiro: 99999.0
+        valor_se_falso: 0.0
+    regras_valores_padrao_df_alvo_tipo_2:
+      - coluna_alvo_1: "barra_controlada"
+        coluna_auxiliar: "numero"
+
+
+
+  # - df_alvo: "dcarDF"
+  #   valores_padrao_df_alvo: # Todos são valores adotados pelo ANAREDE
+  #     operacao: "A"
+  #   regras_valores_padrao_df_alvo_tipo_1:
+  #   regras_valores_padrao_df_alvo_tipo_2:
+  #   regras_valores_padrao_df_alvo_tipo_3:
+  #     - coluna_alvo_1: "tensao"
+  #     - constante: "VFLD"
+
+
+
+  # - df_alvo: "dcbaDF"
+  #   valores_padrao_df_alvo: # Todos são valores adotados pelo ANAREDE
+  #     operacao: "A"
+  #     tipo: 0
+  #     grupo_de_limite_de_tensao: 0
+  #     eletrodo_de_terra: 0.0
+  #     numero_do_elo_cc: 1
+  #   regras_valores_padrao_df_alvo_tipo_1:
+  #     - coluna_alvo_1: "tensao"
+  #       condicao:
+  #         coluna_dependente: "polaridade"
+  #         operador: "=="
+  #         valor: "0"
+  #       valor_se_verdadeiro: 0.0
+  #       valor_se_falso: "None" # mantém a tensão nominal
+  #   regras_valores_padrao_df_alvo_tipo_2:
+     
+
+
+
+
+  # - df_alvo: "dccvDF"
+  #   valores_padrao_df_alvo: # Todos são valores adotados pelo ANAREDE
+  #     operacao: "A"
+  #     folga: "N"
+  #     modo_de_controle_do_inversor: "G"
+  #     margem_de_corrente: 10
+  #     maxima_sobrecorrente: 9999
+  #     angulo_conversor: 0
+  #     angulo_minimo_conversor: 0
+  #     angulo_maximo_conversor: 0
+  #     tensao_cc_minima_para_controle_de_potencia: 0.0
+  #     tap_modo_tensao_reduzida: 1.0
+  #   regras_valores_padrao_df_alvo_tipo_1:
+  #   regras_valores_padrao_df_alvo_tipo_2:
+
+
+
+
+  # - df_alvo: "dcerDF"
+  #   valores_padrao_df_alvo: # Todos são valores adotados pelo ANAREDE
+  #     operacao: "A"
+  #     unidades: 1
+  #     modo_de_controle: "I"
+  #     estado: "L"
+  #     modo_de_correcao_de_limites: "L"
+  #   regras_valores_padrao_df_alvo_tipo_1:
+  #   regras_valores_padrao_df_alvo_tipo_2:
+  #     - coluna_alvo_1: "barra_controlada"
+  #       coluna_auxiliar: "barra"
+
+
+
+  # - df_alvo: "dcliDF"
+  #   valores_padrao_df_alvo: # Todos são valores adotados pelo ANAREDE
+  #     operacao: "A"
+  #     indutancia: 0.0
+  #     capacidade: 1e100
+  #   regras_valores_padrao_df_alvo_tipo_1:
+  #   regras_valores_padrao_df_alvo_tipo_2:
+      
+
+
+  # - df_alvo: "dcnvDF"
+  #   valores_padrao_df_alvo: # Todos são valores adotados pelo ANAREDE
+  #     operacao: "A"
+  #     resistencia_do_reator: 0.0
+  #     indutancia_do_reator: 0.0
+  #     capac_ccc: 1e100
+  #     frequencia: 60.0
+  #   regras_valores_padrao_df_alvo_tipo_1:
+  #   regras_valores_padrao_df_alvo_tipo_2:
+     
+
+
+
+  # - df_alvo: "dcscDF"
+  #   valores_padrao_df_alvo: # Todos são valores adotados pelo ANAREDE
+  #     operacao: "A"
+  #     estado: "L"
+  #     proprietario: "F"
+  #     bypass: "D"
+  #     valor_minimo: -9999.0
+  #     valor_maximo: 9999.0
+  #     modo_de_controle: "X"
+  #     capacidade_normal: 1e100
+  #   regras_valores_padrao_df_alvo_tipo_1:
+  #   regras_valores_padrao_df_alvo_tipo_2:
+  #     - coluna_alvo_1: "capacidade_de_emergencia"
+  #       coluna_auxiliar: "capacidade_normal"
+  #     - coluna_alvo_2: "capacidade_de_equipamento"
+  #       coluna_auxiliar: "capacidade_normal"
+
+
+
+  # - df_alvo: "deloDF"
+  #   valores_padrao_df_alvo: # Todos são valores adotados pelo ANAREDE
+  #     operacao: "A"
+  #     modo_high_mvar: "N"
+  #     estado: "L"
+  #     tipo_do_elo_cc: "L"
+  #   regras_valores_padrao_df_alvo_tipo_1:
+  #   regras_valores_padrao_df_alvo_tipo_2:
+     
+
+
+
+  - df_alvo: "dgbtDF"
+    valores_padrao_df_alvo: # Todos são valores adotados pelo ANAREDE
+      grupo: 0
+      tensao: 1.0
+    regras_valores_padrao_df_alvo_tipo_1:
+    regras_valores_padrao_df_alvo_tipo_2:
+      
+
+
+
+  - df_alvo: "dgerDF"
+    valores_padrao_df_alvo: # Todos são valores adotados pelo ANAREDE
+      operacao: "A"
+      geracao_ativa_minima: 0.0
+      geracao_ativa_maxima: 99999.0
+      fator_de_participacao: 0.0
+      fator_de_participacao_de_controle_remoto: 100.0
+      estatismo: 0.0
+    regras_valores_padrao_df_alvo_tipo_1:
+    regras_valores_padrao_df_alvo_tipo_2:
+      
+
+
+  - df_alvo: "dgltDF"
+    valores_padrao_df_alvo: # Todos são valores adotados pelo ANAREDE
+      limite_minimo: 0.8
+      limite_maximo: 1.2
+    regras_valores_padrao_df_alvo_tipo_1:
+    regras_valores_padrao_df_alvo_tipo_2:
+      - coluna_alvo_1: "limite_minimo_em_emergencia"
+        coluna_auxiliar: "limite_minimo"
+      - coluna_alvo_2: "limite_maximo_em_emergencia"
+        coluna_auxiliar: "limite_maximo"
+
+
+
+  # - df_alvo: "dincDF"
+  #   valores_padrao_df_alvo: # Todos são valores adotados pelo ANAREDE
+  #     operacao: "A"
+  #     parametro_p: 0
+  #     parametro_q: 0
+  #     param_pmax: 9999
+  #     param_qmax: 9999
+  #   regras_valores_padrao_df_alvo_tipo_1:
+  #   regras_valores_padrao_df_alvo_tipo_2:
+    
+
+
+  # - df_alvo: "dinjDF"
+  #   valores_padrao_df_alvo: # Todos são valores adotados pelo ANAREDE
+  #     operacao: "A"
+  #     injecao_equivalente_ativa: 0.0
+  #     injecao_equivalente_reativa: 0.0
+  #     shunt_equivalente: 0.0
+  #     fator_participacao_equivalente: 0.0
+  #   regras_valores_padrao_df_alvo_tipo_1:
+  #   regras_valores_padrao_df_alvo_tipo_2:
+      
+
+
+
+  - df_alvo: "dlinDF"
+    valores_padrao_df_alvo: # Todos são valores adotados pelo ANAREDE
+      abertura_da_barra: "L"
+      operacao: "A"
+      abertura_para_barra: "L"
+      estado: "L"
+      proprietário: "F"
+      modo_de_controle: "A"
+      resistencia: 0.0
+      susceptancia: 0.0
+      defasagem: 0.0
+      capacidade_normal: 1e100
+      numero_de_taps: 33
+      numero_de_unidades: 1
+      numero_de_unidades_em_operacao: 1
+    regras_valores_padrao_df_alvo_tipo_1:
+    regras_valores_padrao_df_alvo_tipo_2:
+      - coluna_alvo_1: "barra_controlada"
+        coluna_auxiliar: "da_barra"
+      - coluna_alvo_2: "capacidade_em_emergencia"
+        coluna_auxiliar: "capacidade_normal"
+      - coluna_alvo_3: "capacidade_de_equipamento"
+        coluna_auxiliar: "capacidade_normal"
+
+
+
+  # - df_alvo: "dopcDF"
+  #   valores_padrao_df_alvo: # Todos são valores adotados pelo ANAREDE
+  #   regras_valores_padrao_df_alvo_tipo_1:
+  #   regras_valores_padrao_df_alvo_tipo_2:
+      
+
+
+
+
+  # - df_alvo: "dshlDF"
+  #   valores_padrao_df_alvo: # Todos são valores adotados pelo ANAREDE
+  #     operacao: "A"
+  #     estado_shunt_barra_de: "L"
+  #     estado_shunt_barra_para: "L"
+  #   regras_valores_padrao_df_alvo_tipo_1:
+  #   regras_valores_padrao_df_alvo_tipo_2:
+    
+
+
+
+  # - df_alvo: "dtpfDF"
+  #   valores_padrao_df_alvo: # Todos são valores adotados pelo ANAREDE
+  #     operacao: "A"
+  #     interligacao: "T"
+  #   regras_valores_padrao_df_alvo_tipo_1:
+  #   regras_valores_padrao_df_alvo_tipo_2:
+    
+
