@@ -3,13 +3,13 @@
 
 
 
-from EnlineDevEng.utils.auxiliary import PowerSystemsNet
+from EnlineDevEng.utils.auxiliary import EnlineDevEngNet
 from EnlineDevEng.utils.populate import _set_entries
 
 
 
 def create_load(
-    net: PowerSystemsNet,
+    net: EnlineDevEngNet,
     name: str,
     bus: int,
     p_mw: float,
@@ -27,7 +27,7 @@ def create_load(
     Todas as cargas são modeladas no sistema consumidor.
     
     Parâmetros:
-        net: A rede PowerSystems em que o elemento é criado
+        net: A rede EnlineDevEng em que o elemento é criado
         bus: A barra que a carga está conectada.
         p_mw: A potência ativa da carga
             

@@ -1,13 +1,13 @@
 
 
 
-from EnlineDevEng.utils.auxiliary import PowerSystemsNet
+from EnlineDevEng.utils.auxiliary import EnlineDevEngNet
 from EnlineDevEng.utils.populate import _set_entries
 
 
 
 def create_bus(
-    net: PowerSystemsNet,
+    net: EnlineDevEngNet,
     vn_kv: float,
     name: str,
     in_service: bool = True
@@ -17,7 +17,7 @@ def create_bus(
     Adiciona uma barra na tabela net["bus"].
     
     Parâmetros:
-        net: A rede PowerSystems em que o elemento é criado
+        net: A rede EnlineDevEng em que o elemento é criado
         vn_kv: O nível de tensão da rede.
         name: O nome da barra.
         in_service: True se a barra estiver em operação, 

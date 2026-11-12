@@ -1,17 +1,17 @@
 
 
-from EnlineDevEng.utils.auxiliary import PowerSystemsNet
+from EnlineDevEng.utils.auxiliary import EnlineDevEngNet
 from EnlineDevEng.utils.network_structure import get_struture_dict
 
 
 
 def create_empty_network(
     name: str = "", f_hz: float = 60.0, sn_mva: float = 100.0 
-) -> PowerSystemsNet:
+) -> EnlineDevEngNet:
     
     
     """
-    Esta Função inicializa a estrutura de dados do PowerSystems.
+    Esta Função inicializa a estrutura de dados do EnlineDevEng.
     
     Parâmetros:
         f_hz: frequência do sistema em Hertz
@@ -19,7 +19,7 @@ def create_empty_network(
         sn_mva: Potência aparente base
     
     Returns:
-        net = dicionário de atributos PowerSystems com tabelas
+        net = dicionário de atributos EnlineDevEng com tabelas
         vazias
     
     Example:
@@ -32,6 +32,6 @@ def create_empty_network(
     network_structure_dict["f_hz"]   = f_hz
     network_structure_dict["sn_mva"] = sn_mva
 
-    net = PowerSystemsNet(PowerSystemsNet.create_dataframes(network_structure_dict))
+    net = EnlineDevEngNet(EnlineDevEngNet.create_dataframes(network_structure_dict))
     
     return net

@@ -10,7 +10,7 @@ class PWFInjectorBuilder(BaseNetworkFileBuilder):
     
     """
     Lê a estrutura 'net.DadosRede' (extraída pelo PWFNetworkParser)
-    e injeta automaticamente os elementos via 'pp.create_' do EnlineDevEng.
+    e injeta automaticamente os elementos via 'ede.create_' do EnlineDevEng.
     """
     
     extensions = ["pwf"]

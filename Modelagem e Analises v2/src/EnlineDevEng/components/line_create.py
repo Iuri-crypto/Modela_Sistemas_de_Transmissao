@@ -1,13 +1,13 @@
 
 
 
-from EnlineDevEng.utils.auxiliary import PowerSystemsNet
+from EnlineDevEng.utils.auxiliary import EnlineDevEngNet
 from EnlineDevEng.utils.populate import _set_entries
 
 
 
 def create_line(
-    net: PowerSystemsNet,
+    net: EnlineDevEngNet,
     name: str,
     from_bus: int,
     to_bus: int,

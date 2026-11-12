@@ -1,13 +1,13 @@
 
 
 
-from EnlineDevEng.utils.auxiliary import PowerSystemsNet
+from EnlineDevEng.utils.auxiliary import EnlineDevEngNet
 from EnlineDevEng.utils.populate import _set_entries
 
 
 
 def create_gen(
-    net: PowerSystemsNet,
+    net: EnlineDevEngNet,
     name: str | None,
     bus: int,
     p_mw: float,
@@ -23,7 +23,7 @@ def create_gen(
     barras PV com controle de tensão.
     
     Parâmetros:
-        net: A rede PowerSystems em que o elemento é criado
+        net: A rede EnlineDevEng em que o elemento é criado
         bus: A barra que o gerador se conecta
         vn_kv: O nível de tensão da rede.
         name: O nome do gerador.

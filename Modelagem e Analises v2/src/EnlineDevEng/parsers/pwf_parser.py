@@ -56,19 +56,17 @@ class PWFNetworkParser(BaseNetworkParser):
         
         # Anexa o objeto de dados 
         net.DadosRede = self.rede
-        
-        
+    
         # Ler Arquivo
         self.rede.linhas = self.rede.path_pwf.read_text(
                             encoding=encoding).splitlines()
         
-        
         # Extração 
         while self.rede.linhas[self.rede.idx_linha] != self.caractere_fim:
-            linha = self.rede.linhas[self.rede.idx_linha].strip()
-            linha_atual_completa = self.rede.linhas[self.rede.idx_linha][:]
+            linha                  = self.rede.linhas[self.rede.idx_linha].strip()
+            linha_atual_completa   = self.rede.linhas[self.rede.idx_linha][:]
             linha_proxima_completa = self.rede.linhas[self.rede.idx_linha + 1][:]
-            linha_proxima_3 = self.rede.linhas[self.rede.idx_linha + 3][:]
+            linha_proxima_3        = self.rede.linhas[self.rede.idx_linha + 3][:]
             
             
           

@@ -1,13 +1,13 @@
 
 
 
-from EnlineDevEng.utils.auxiliary import PowerSystemsNet
+from EnlineDevEng.utils.auxiliary import EnlineDevEngNet
 from EnlineDevEng.utils.populate import _set_entries
 
 
 
 def create_trafo(
-    net: PowerSystemsNet,
+    net: EnlineDevEngNet,
     name: str,
     hv_bus: float,
     lv_bus: float,
@@ -33,7 +33,7 @@ def create_trafo(
     Adiciona um transformador na tabela net["trafo"].
     
     Parâmetros:
-        net: A rede PowerSystems em que o elemento é criado
+        net: A rede EnlineDevEng em que o elemento é criado
         name: Nome do transformador
         hv_bus: ID da barra em alta tensão que o trafo é conectado.
         lv_bus: ID da barra de baixa tensão que o trafo é conectado.

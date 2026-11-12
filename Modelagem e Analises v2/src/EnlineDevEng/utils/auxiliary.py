@@ -21,9 +21,9 @@ class ADict(dict):
 
 class EnlineDevEngNet(ADict):
     """
-    Construtor do PowerSystems
+    Construtor do EnlineDevEng
     O dicionário fornecido precisa conter os dataframes
-    de dados da rede PowerSystems, por exemplo use o método
+    de dados da rede EnlineDevEng, por exemplo use o método
     da classe create_dataframes
     """
     

@@ -114,8 +114,9 @@ class BaseNetworkParser(ABC):
     @abstractmethod
     def parse(self, net: Any, filepath: Path, encoding: str = "latin-1"):
         """
-        Executa a leitura linha por linha do arquivo e 
-        envia as informações para 'net'
+        1 - Impede que a classe base seja instanciada diretamente
+        2 - Obriga as subclasses a implementarem a leitura
+        3 - Garante uma interface única (Poliformismo)
         """
         
         pass 
@@ -158,8 +159,11 @@ class BaseNetworkFileBuilder(ABC):
     @classmethod
     def get_builder(cls, file_path: Path) -> BaseNetworkFileBuilder:
         """
-        Instancia o parser adequado baseado na extensão
-        do arquivo.
+        Instancia o modelador adequado baseado na extensão
+        do arquivo. 
+            
+            OBS: Cada arquivo tem um conjunto de 
+        informações que permite modelar a rede de determinada forma.
         """
         extension = file_path.suffix.lstrip(".")
         

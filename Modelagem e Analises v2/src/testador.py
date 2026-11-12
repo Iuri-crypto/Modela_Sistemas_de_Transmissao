@@ -99,19 +99,55 @@ ede.create_trafo(
     in_service=True
 )
 
-file = "C:\Users\muril\OneDrive\Documentos\Estagio ENLINE - atividades\Modelagem e Analises v2\src\tests\ieee14_v1.pwf"
 ede.runpf(
     net=net,
-    algorithm="nr",
-    is_file=True,
-    dir_file=file,
-    extension="pwf"
+    algorithm="nr"
 )
 
 
 
+# Segunda opção
+##########################################
+import EnlineDevEng as ede 
+
+
+file = "C:\Users\muril\OneDrive\Documentos\Estagio ENLINE - atividades\Modelagem e Analises v2\src\tests\ieee14_v1.pwf"
+ede.runpf(
+    net=net,
+    dir_file=file,
+    algorithm="nr"
+)
+##########################################
 
 print(net)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -1,13 +1,13 @@
 
 
 
-from EnlineDevEng.utils.auxiliary import PowerSystemsNet
+from EnlineDevEng.utils.auxiliary import EnlineDevEngNet
 from EnlineDevEng.utils.populate import _set_entries
 
 
 
 def create_ext_grid(
-    net: PowerSystemsNet,
+    net: EnlineDevEngNet,
     name: str | None,
     bus: int,
     vm_pu: float = 1.0,
@@ -22,7 +22,7 @@ def create_ext_grid(
     slack no cálculo do fluxo de potência.
     
     Parâmetros:
-        net: A rede PowerSystems em que o elemento é criado
+        net: A rede EnlineDevEng em que o elemento é criado
         bus: A barra que a rede externa se conecta
         name: O nome da rede externa.
         vm_pu: A tensão de referência da rede externa.

@@ -1,13 +1,13 @@
 
 
 
-from EnlineDevEng.utils.auxiliary import PowerSystemsNet
+from EnlineDevEng.utils.auxiliary import EnlineDevEngNet
 from EnlineDevEng.utils.populate import _set_entries
 
 
 
 def create_shunt(
-    net: PowerSystemsNet,
+    net: EnlineDevEngNet,
     bus: int,
     q_mvar: float,
     vn_kv: float | None = None,
@@ -20,7 +20,7 @@ def create_shunt(
     Adiciona um shunt na tabela net["shunt"].
     
     Parâmetros:
-        net: A rede PowerSystems em que o elemento é criado
+        net: A rede EnlineDevEng em que o elemento é criado
         bus: O índice da barra que o shunt está conectado.
         q_mvar: Potência reativa na tensão 1.o pu.
         vn_kv: Tensão nominal do shunt.

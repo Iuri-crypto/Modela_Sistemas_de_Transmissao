@@ -1,6 +1,7 @@
 
 
-from typing import Any
+
+
 from EnlineDevEng.core.adm import BasePowerFlowSolver
 from EnlineDevEng.models.grid_model import GridModel
 
@@ -10,7 +11,7 @@ class NewthonRaphsonSolver(BasePowerFlowSolver):
     
     def __init__(
         self, 
-        tolerancia: float = 1e-6, 
+        tolerancia:  float = 1e-6, 
         maxiterations: int = 20
     ):
         
