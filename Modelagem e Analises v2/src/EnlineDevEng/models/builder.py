@@ -5,7 +5,6 @@ from EnlineDevEng.core.adm import BaseNetworkBuilder
 from .grid_model import GridModel
 
 
-
 class NetworkBuilder(BaseNetworkBuilder):
     
     """
@@ -14,7 +13,7 @@ class NetworkBuilder(BaseNetworkBuilder):
     gera a matriz Ybus esparsa
     """
     
-    def build(self, net: Any) -> GridModel:
+    def build(self, net: Any, ede: Any) -> GridModel:
         
         obj = GridModel()
         

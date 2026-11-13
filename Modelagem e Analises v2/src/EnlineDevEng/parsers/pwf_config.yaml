@@ -11,9 +11,9 @@ regras_gerais:
     df_auxiliar: "dgbtDF"
     coluna_merge_auxiliar: "grupo"
     colunas_coletar:
-      - tensao: "tensao_base"
+      - tensao: "tensao"
     valores_padrao_merge: # Nem todos são valores adotados pelo ANAREDE
-      tensao: 1.0
+      tensao: 1000.0
         
 
   - df_alvo: "dbarDF"
@@ -145,7 +145,7 @@ regras_individuais:
       carga_reativa: 0.0
       capacitor_reator: 0.0
       area: 1
-      tensao_para_definicao_de_carga: 1.0
+      tensao_para_definicao_de_carga: 1000.0
     regras_valores_padrao_df_alvo_tipo_1:
       - coluna_alvo_1: "geracao_reativa_minima"
         condicao:
@@ -352,7 +352,7 @@ regras_individuais:
       operacao: "A"
       abertura_para_barra: "L"
       estado: "L"
-      proprietário: "F"
+      proprietario: "F"
       modo_de_controle: "A"
       resistencia: 0.0
       susceptancia: 0.0
@@ -367,7 +367,7 @@ regras_individuais:
         coluna_auxiliar: "da_barra"
       - coluna_alvo_2: "capacidade_em_emergencia"
         coluna_auxiliar: "capacidade_normal"
-      - coluna_alvo_3: "capacidade_de_equipamento"
+      - coluna_alvo_3: "capacidade_do_equipamento"
         coluna_auxiliar: "capacidade_normal"
 
 

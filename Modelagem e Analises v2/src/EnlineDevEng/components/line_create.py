@@ -8,13 +8,13 @@ from EnlineDevEng.utils.populate import _set_entries
 
 def create_line(
     net: EnlineDevEngNet,
-    name: str,
     from_bus: int,
     to_bus: int,
     length_km: float,
-    r_ohm_per_km: float,
-    x_ohm_per_km: float,
-    c_nf_per_km: float,
+    r_percent: float,
+    x_percent: float,
+    b_percent: float,
+    name: str | None = None,
     in_service: bool = True
 ):
     
@@ -27,9 +27,9 @@ def create_line(
         from_bus: ID da barra no lado da linha.
         to_bus: ID da barra no outro lado da linha.
         length_km: O comprimento da linha em km.
-        r_ohm_per_km: Resistência da linha em ohm por km.
-        x_ohm_per_km: Reatância da linha em ohm por km.
-        c_nf_per_km: Capacitância de sequência zero em nano Farady por km.
+        r_percent: Resistência em percentual.
+        x_percent: Reatância em percentual.
+        b_percent: Susceptância em percentual.
         in_service: True se a linha estiver em operação, 
                     False se estiver fora de operação.
                     
@@ -47,9 +47,9 @@ def create_line(
         "from_bus": from_bus,
         "to_bus": to_bus,
         "length_km": length_km,
-        "r_ohm_per_km": r_ohm_per_km,
-        "x_ohm_per_km": x_ohm_per_km,
-        "c_nf_per_km": c_nf_per_km,
+        "r_percent": r_percent,
+        "x_percent": x_percent,
+        "b_percent": b_percent,
         "in_service": in_service
     }
     

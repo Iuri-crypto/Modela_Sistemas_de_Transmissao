@@ -5,10 +5,31 @@
 
 from pathlib import Path 
 from abc import ABC, abstractmethod
-from typing import Dict, Type, Any
-from EnlineDevEng.models.grid_model import GridModel
+from typing import Dict, Type, Any, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from EnlineDevEng.models.grid_model import GridModel
+    
 
 
+
+class BaseNetworkBuilder(ABC):
+    
+    """
+    Interface abstrata para o modelador de rede.
+    """
+    
+    @abstractmethod
+    def build(self, net: Any) -> GridModel:
+        """
+        Processa os dataframes crus e retorna o 
+        GridModel limpo.
+        """
+        pass
+    
+    
+    
+    
 class BasePowerFlowSolver(ABC):
     
     """
@@ -21,7 +42,7 @@ class BasePowerFlowSolver(ABC):
     
     # Atributo que cada subclasse deve definir
     # Ex: ['nr']
-    aliases = list[str] = []
+    aliases: list[str] = []
 
     def __init_subclass__(cls, **kwargs):
         """
@@ -55,23 +76,6 @@ class BasePowerFlowSolver(ABC):
         classe nascer."
         
         -> Resolve o fluxo de potência
-        """
-        pass
-        
-
-
-
-class BaseNetworkBuilder(ABC):
-    
-    """
-    Interface abstrata para o modelador de rede.
-    """
-    
-    @abstractmethod
-    def build(self, net: Any) -> GridModel:
-        """
-        Processa os dataframes crus e retorna o 
-        GridModel limpo.
         """
         pass
     
@@ -141,7 +145,7 @@ class BaseNetworkFileBuilder(ABC):
     """
     
     _registry: Dict[str, Type[BaseNetworkFileBuilder]] = {}
-    extensions = list[str] = []
+    extensions: list[str] = []
     
     
     def __init_subclass__(cls, **kwargs):

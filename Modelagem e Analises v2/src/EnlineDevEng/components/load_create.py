@@ -10,10 +10,10 @@ from EnlineDevEng.utils.populate import _set_entries
 
 def create_load(
     net: EnlineDevEngNet,
-    name: str,
     bus: int,
     p_mw: float,
     q_mvar: float,
+    name: str | None = None,
     const_z_p_percent: float = 0,
     const_i_p_percent: float = 0,
     const_z_q_percent: float = 0,

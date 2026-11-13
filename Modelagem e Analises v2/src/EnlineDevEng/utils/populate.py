@@ -11,6 +11,10 @@ def _set_entries(
     Adiciona as informações de entries na tabela table.
     """
     
+    if net[table].empty:
+        index = 0
+    else:
+        index = int(net[table].index.max()) + 1
+
     for col, val in entries.items():
-        index = net[table].index.max() + 1
-        net[table].at[index, col] = val 
+        net[table].at[index, col] = val

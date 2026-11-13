@@ -8,8 +8,9 @@ from EnlineDevEng.utils.populate import _set_entries
 
 def create_bus(
     net: EnlineDevEngNet,
-    vn_kv: float,
-    name: str,
+    vn : float,
+    numero: int,
+    name: str | None = None,
     in_service: bool = True
 ):
     
@@ -30,5 +31,5 @@ def create_bus(
         >>> create_bus(net, 20.0, name="bus1")
     """
     
-    entries = {"name": name, "vn_kv": vn_kv, "in_service": in_service}
+    entries = {"name": name, "vn": vn, "numero": numero, "in_service": in_service}
     _set_entries(net, "bus", entries=entries)

@@ -14,7 +14,7 @@ if TYPE_CHECKING:
     from pwf_parser import DadosRedePWF
 
 
-
+pd.set_option("future.no_silent_downcasting", True)
 
  
 
@@ -588,36 +588,36 @@ def dbar(rede: DadosRedePWF):
             pass 
         
         else:
-            rede.dbar["numero"].append(linha[:5])
-            rede.dbar["operacao"].append(linha[5])
-            rede.dbar["estado"].append(linha[6])
-            rede.dbar["tipo"].append(linha[7])
-            rede.dbar["grupo_de_base_de_tensao"].append(linha[8:10])
-            rede.dbar["nome"].append(linha[10:22].split(" ")[0])
-            rede.dbar["grupo_de_limite_de_tensao"].append(linha[22:24])
-            rede.dbar["tensao"].append(linha[24:28])
-            rede.dbar["angulo"].append(linha[28:32])
-            rede.dbar["geracao_ativa"].append(linha[32:37])
-            rede.dbar["geracao_reativa"].append(linha[37:42])
-            rede.dbar["geracao_reativa_minima"].append(linha[42:47])
-            rede.dbar["geracao_reativa_maxima"].append(linha[47:52])
-            rede.dbar["barra_controlada"].append(linha[52:58])
-            rede.dbar["carga_ativa"].append(linha[58:63])
-            rede.dbar["carga_reativa"].append(linha[63:68])
-            rede.dbar["capacitor_reator"].append(linha[68:73])
-            rede.dbar["area"].append(linha[73:76])
-            rede.dbar["tensao_para_definicao_de_carga"].append(linha[76:80])
-            rede.dbar["modo_de_visualizacao"].append(linha[80])
-            rede.dbar["agregador_1"].append(linha[81:84])
-            rede.dbar["agregador_2"].append(linha[84:87])
-            rede.dbar["agregador_3"].append(linha[87:90])
-            rede.dbar["agregador_4"].append(linha[90:93])
-            rede.dbar["agregador_5"].append(linha[93:96])
-            rede.dbar["agregador_6"].append(linha[96:99])
-            rede.dbar["agregador_7"].append(linha[99:102])
-            rede.dbar["agregador_8"].append(linha[102:105])
-            rede.dbar["agregador_9"].append(linha[105:108])
-            rede.dbar["agregador_10"].append(linha[108:111])
+            rede.dbar["numero"].append(linha[:5].strip())
+            rede.dbar["operacao"].append(linha[5].strip())
+            rede.dbar["estado"].append(linha[6].strip())
+            rede.dbar["tipo"].append(linha[7].strip())
+            rede.dbar["grupo_de_base_de_tensao"].append(linha[8:10].strip())
+            rede.dbar["nome"].append(linha[10:22].split(" ")[0].strip())
+            rede.dbar["grupo_de_limite_de_tensao"].append(linha[22:24].strip())
+            rede.dbar["tensao"].append(linha[24:28].strip())
+            rede.dbar["angulo"].append(linha[28:32].strip())
+            rede.dbar["geracao_ativa"].append(linha[32:37].strip())
+            rede.dbar["geracao_reativa"].append(linha[37:42].strip())
+            rede.dbar["geracao_reativa_minima"].append(linha[42:47].strip())
+            rede.dbar["geracao_reativa_maxima"].append(linha[47:52].strip())
+            rede.dbar["barra_controlada"].append(linha[52:58].strip())
+            rede.dbar["carga_ativa"].append(linha[58:63].strip())
+            rede.dbar["carga_reativa"].append(linha[63:68].strip())
+            rede.dbar["capacitor_reator"].append(linha[68:73].strip())
+            rede.dbar["area"].append(linha[73:76].strip())
+            rede.dbar["tensao_para_definicao_de_carga"].append(linha[76:80].strip())
+            rede.dbar["modo_de_visualizacao"].append(linha[80].strip())
+            rede.dbar["agregador_1"].append(linha[81:84].strip())
+            rede.dbar["agregador_2"].append(linha[84:87].strip())
+            rede.dbar["agregador_3"].append(linha[87:90].strip())
+            rede.dbar["agregador_4"].append(linha[90:93].strip())
+            rede.dbar["agregador_5"].append(linha[93:96].strip())
+            rede.dbar["agregador_6"].append(linha[96:99].strip())
+            rede.dbar["agregador_7"].append(linha[99:102].strip())
+            rede.dbar["agregador_8"].append(linha[102:105].strip())
+            rede.dbar["agregador_9"].append(linha[105:108].strip())
+            rede.dbar["agregador_10"].append(linha[108:111].strip())
             
         rede.idx_linha += 1
         
@@ -625,13 +625,13 @@ def dbar(rede: DadosRedePWF):
     # DataFrame dos Dados de Barra
     rede.dbarDF = DF(data=rede.dbar)
     rede.dbar = deepcopy(rede.dbarDF)
-    rede.dbarDF = rede.dbarDF.replace(r"^\s*$", None, regex=True)
+    rede.dbarDF = rede.dbarDF.replace(r"^\s*$", np.nan, regex=True)
     rede.dbarDF = rede.dbarDF.astype(
         {
-            "numero": "int",
+            "numero": "Int64",
             "operacao": "object",
             "estado": "object",
-            "tipo": "int",
+            "tipo": "Int64",
             "grupo_de_base_de_tensao": "object",
             "nome": "str",
             "grupo_de_limite_de_tensao": "object",
@@ -645,9 +645,9 @@ def dbar(rede: DadosRedePWF):
             "carga_ativa": "float",
             "carga_reativa": "float",
             "capacitor_reator": "float",
-            "area": "int",
+            "area": "Int64",
             "tensao_para_definicao_de_carga": "float",
-            "modo_de_visualizacao": "int",
+            "modo_de_visualizacao": "Int64",
             "agregador_1": "object",
             "agregador_2": "object",
             "agregador_3": "object",
@@ -1242,25 +1242,25 @@ def dcte(rede: DadosRedePWF):
             pass 
         
         else:
-            rede.dcte["constante"].append(linha[:4])
-            rede.dcte["valor_constante"].append(linha[5:11])
-            rede.dcte["constante"].append(linha[12:16])
-            rede.dcte["valor_constante"].append(linha[17:23])
-            rede.dcte["constante"].append(linha[24:28])
-            rede.dcte["valor_constante"].append(linha[29:35])
-            rede.dcte["constante"].append(linha[36:40])
-            rede.dcte["valor_constante"].append(linha[41:47])
-            rede.dcte["constante"].append(linha[48:52])
-            rede.dcte["valor_constante"].append(linha[53:59])
-            rede.dcte["constante"].append(linha[60:64])
-            rede.dcte["valor_constante"].append(linha[65:71])
+            rede.dcte["constante"].append(linha[:4].strip())
+            rede.dcte["valor_constante"].append(linha[5:11].strip())
+            rede.dcte["constante"].append(linha[12:16].strip())
+            rede.dcte["valor_constante"].append(linha[17:23].strip())
+            rede.dcte["constante"].append(linha[24:28].strip())
+            rede.dcte["valor_constante"].append(linha[29:35].strip())
+            rede.dcte["constante"].append(linha[36:40].strip())
+            rede.dcte["valor_constante"].append(linha[41:47].strip())
+            rede.dcte["constante"].append(linha[48:52].strip())
+            rede.dcte["valor_constante"].append(linha[53:59].strip())
+            rede.dcte["constante"].append(linha[60:64].strip())
+            rede.dcte["valor_constante"].append(linha[65:71].strip())
         
         rede.idx_linha += 1
         
     # DataFrame dos Dados de Constantes
     rede.dcteDF = DF(data=rede.dcte)
     rede.dcte = deepcopy(rede.dcteDF)
-    rede.dcteDF = rede.dcteDF.replace(r"^\s*$", None, regex=True)
+    rede.dcteDF = rede.dcteDF.replace(r"^\s*$", np.nan, regex=True)
     rede.dcteDF = rede.dcteDF.astype(
         {
             "constante": "object",
@@ -1539,15 +1539,15 @@ def dgbt(rede: DadosRedePWF):
             pass 
         
         else:
-            rede.dgbt["grupo"].append(linha[:2])
-            rede.dgbt["tensao"].append(linha[3:8])
+            rede.dgbt["grupo"].append(linha[:2].strip())
+            rede.dgbt["tensao"].append(linha[3:8].strip())
         
         rede.idx_linha += 1
     
     # DataFrame dos Dados de Intercâmbio de Potencia Ativa entre areas
     rede.dgbtDF = DF(data=rede.dgbt)
     rede.dgbt = deepcopy(rede.dgbtDF)
-    rede.dgbtDF = rede.dgbtDF.replace(r"^\s*$", None, regex=True)
+    rede.dgbtDF = rede.dgbtDF.replace(r"^\s*$", np.nan, regex=True)
     rede.dgbtDF = rede.dgbtDF.astype(
         {
             "grupo": "object",
@@ -1591,29 +1591,29 @@ def dger(rede: DadosRedePWF):
             pass 
         
         else:
-            rede.dger["numero"].append(linha[:5])
-            rede.dger["operacao"].append(linha[6])
-            rede.dger["geracao_ativa_minima"].append(linha[8:14])
-            rede.dger["geracao_ativa_maxima"].append(linha[15:21])
-            rede.dger["fator_de_participacao"].append(linha[22:27])
-            rede.dger["fator_de_participacao_de_controle_remoto"].append(linha[28:33])
-            rede.dger["fator_de_potencia_nominal"].append(linha[34:39])
-            rede.dger["fator_de_servico_armadura"].append(linha[40:44])
-            rede.dger["fator_de_servico_rotor"].append(linha[45:49])
-            rede.dger["angulo_de_carga"].append(linha[50:54])
-            rede.dger["reatancia_de_maquina"].append(linha[55:60])
-            rede.dger["potencia_aparente_nominal"].append(linha[61:66])
-            rede.dger["estatismo"].append(linha[66:72])
+            rede.dger["numero"].append(linha[:5].strip())
+            rede.dger["operacao"].append(linha[6].strip())
+            rede.dger["geracao_ativa_minima"].append(linha[8:14].strip())
+            rede.dger["geracao_ativa_maxima"].append(linha[15:21].strip())
+            rede.dger["fator_de_participacao"].append(linha[22:27].strip())
+            rede.dger["fator_de_participacao_de_controle_remoto"].append(linha[28:33].strip())
+            rede.dger["fator_de_potencia_nominal"].append(linha[34:39].strip())
+            rede.dger["fator_de_servico_armadura"].append(linha[40:44].strip())
+            rede.dger["fator_de_servico_rotor"].append(linha[45:49].strip())
+            rede.dger["angulo_de_carga"].append(linha[50:54].strip())
+            rede.dger["reatancia_de_maquina"].append(linha[55:60].strip())
+            rede.dger["potencia_aparente_nominal"].append(linha[61:66].strip())
+            rede.dger["estatismo"].append(linha[66:72].strip())
         
         rede.idx_linha += 1
     
     # DataFrame dos Dados de Geradores
     rede.dgerDF = DF(data=rede.dger)
     rede.dger = deepcopy(rede.dgerDF)
-    rede.dgerDF = rede.dgerDF.replace(r"^\s*$", None, regex=True)
+    rede.dgerDF = rede.dgerDF.replace(r"^\s*$", np.nan, regex=True)
     rede.dgerDF = rede.dgerDF.astype(
         {
-            "numero": "int",
+            "numero": "Int64",
             "operacao": "object",
             "geracao_ativa_minima": "float",
             "geracao_ativa_maxima": "float",
@@ -1658,18 +1658,18 @@ def dglt(rede: DadosRedePWF):
             pass 
         
         else:
-            rede.dglt["grupo"].append(linha[:2])
-            rede.dglt["limite_minimo"].append(linha[3:8])
-            rede.dglt["limite_maximo"].append(linha[9:14])
-            rede.dglt["limite_minimo_em_emergencia"].append(linha[15:20])
-            rede.dglt["limite_maximo_em_emergencia"].append(linha[21:26])
+            rede.dglt["grupo"].append(linha[:2].strip())
+            rede.dglt["limite_minimo"].append(linha[3:8].strip())
+            rede.dglt["limite_maximo"].append(linha[9:14].strip())
+            rede.dglt["limite_minimo_em_emergencia"].append(linha[15:20].strip())
+            rede.dglt["limite_maximo_em_emergencia"].append(linha[21:26].strip())
             
         rede.idx_linha += 1
     
     # DataFrame dos Dados de Intercâmbio de Potencia Ativa entre areas
     rede.dgltDF = DF(data=rede.dglt)
     rede.dglt = deepcopy(rede.dgltDF)
-    rede.dgltDF = rede.dgltDF.replace(r"^\s*$", None, regex=True)
+    rede.dgltDF = rede.dgltDF.replace(r"^\s*$", np.nan, regex=True)
     rede.dgltDF = rede.dgltDF.astype(
         {
             "grupo": "object",
@@ -1856,7 +1856,7 @@ def dlin(rede: DadosRedePWF):
     rede.dlin["defasagem"] = list()
     rede.dlin["barra_controlada"] = list()
     rede.dlin["capacidade_normal"] = list()
-    rede.dlin["capacidade_em_emergencial"] = list()
+    rede.dlin["capacidade_em_emergencia"] = list()
     rede.dlin["numero_de_taps"] = list()
     rede.dlin["capacidade_do_equipamento"] = list()
     rede.dlin["agregador_1"] = list()
@@ -1879,53 +1879,53 @@ def dlin(rede: DadosRedePWF):
             pass 
         
         else:
-            rede.dlin["da_barra"].append(linha[:5])
-            rede.dlin["abertura_da_barra"].append(linha[5])
-            rede.dlin["operacao"].append(linha[7])
-            rede.dlin["abertura_para_barra"].append(linha[9])
-            rede.dlin["para_barra"].append(linha[10:15])
-            rede.dlin["circuito"].append(linha[15:17])
-            rede.dlin["estado"].append(linha[17])
-            rede.dlin["proprietario"].append(linha[18])
-            rede.dlin["modo_de_controle"].append(linha[19])
-            rede.dlin["resistencia"].append(linha[20:26])
-            rede.dlin["reatancia"].append(linha[26:32])
-            rede.dlin["susceptancia"].append(linha[32:38])
-            rede.dlin["tap"].append(linha[38:43])
-            rede.dlin["tap_minimo"].append(linha[43:48])
-            rede.dlin["tap_maximo"].append(linha[48:53])
-            rede.dlin["defasagem"].append(linha[53:58])
-            rede.dlin["barra_controlada"].append(linha[58:64])
-            rede.dlin["capacidade_normal"].append(linha[64:68])
-            rede.dlin["capacidade_em_emergencial"].append(linha[68:72])
-            rede.dlin["numero_de_taps"].append(linha[72:74])
-            rede.dlin["capacidade_do_equipamento"].append(linha[74:78])
-            rede.dlin["agregador_1"].append(linha[78:81])
-            rede.dlin["agregador_1"].append(linha[81:84])
-            rede.dlin["agregador_1"].append(linha[84:87])
-            rede.dlin["agregador_1"].append(linha[87:90])
-            rede.dlin["agregador_1"].append(linha[90:93])
-            rede.dlin["agregador_1"].append(linha[93:96])
-            rede.dlin["agregador_1"].append(linha[96:99])
-            rede.dlin["agregador_1"].append(linha[99:102])
-            rede.dlin["agregador_1"].append(linha[102:105])
-            rede.dlin["agregador_1"].append(linha[105:108])
-            rede.dlin["numero_de_unidades"].append(linha[109:112])
-            rede.dlin["numero_de_unidades_em_operacao"].append(linha[113:116])
+            rede.dlin["da_barra"].append(linha[:5].strip())
+            rede.dlin["abertura_da_barra"].append(linha[5].strip())
+            rede.dlin["operacao"].append(linha[7].strip())
+            rede.dlin["abertura_para_barra"].append(linha[9].strip())
+            rede.dlin["para_barra"].append(linha[10:15].strip())
+            rede.dlin["circuito"].append(linha[15:17].strip())
+            rede.dlin["estado"].append(linha[17].strip())
+            rede.dlin["proprietario"].append(linha[18].strip())
+            rede.dlin["modo_de_controle"].append(linha[19].strip())
+            rede.dlin["resistencia"].append(linha[20:26].strip())
+            rede.dlin["reatancia"].append(linha[26:32].strip())
+            rede.dlin["susceptancia"].append(linha[32:38].strip())
+            rede.dlin["tap"].append(linha[38:43].strip())
+            rede.dlin["tap_minimo"].append(linha[43:48].strip())
+            rede.dlin["tap_maximo"].append(linha[48:53].strip())
+            rede.dlin["defasagem"].append(linha[53:58].strip())
+            rede.dlin["barra_controlada"].append(linha[58:64].strip())
+            rede.dlin["capacidade_normal"].append(linha[64:68].strip())
+            rede.dlin["capacidade_em_emergencia"].append(linha[68:72].strip())
+            rede.dlin["numero_de_taps"].append(linha[72:74].strip())
+            rede.dlin["capacidade_do_equipamento"].append(linha[74:78].strip())
+            rede.dlin["agregador_1"].append(linha[78:81].strip())
+            rede.dlin["agregador_2"].append(linha[81:84].strip())
+            rede.dlin["agregador_3"].append(linha[84:87].strip())
+            rede.dlin["agregador_4"].append(linha[87:90].strip())
+            rede.dlin["agregador_5"].append(linha[90:93].strip())
+            rede.dlin["agregador_6"].append(linha[93:96].strip())
+            rede.dlin["agregador_7"].append(linha[96:99].strip())
+            rede.dlin["agregador_8"].append(linha[99:102].strip())
+            rede.dlin["agregador_9"].append(linha[102:105].strip())
+            rede.dlin["agregador_10"].append(linha[105:108].strip())
+            rede.dlin["numero_de_unidades"].append(linha[109:112].strip())
+            rede.dlin["numero_de_unidades_em_operacao"].append(linha[113:116].strip())
             
         rede.idx_linha += 1
         
     # DataFrame dos Dados de Linha
     rede.dlinDF = DF(data=rede.dlin)
     rede.dlin = deepcopy(rede.dlinDF)
-    rede.dlinDF = rede.dlinDF.replace(r"^\s*$", None, regex=True)
+    rede.dlinDF = rede.dlinDF.replace(r"^\s*$", np.nan, regex=True)
     rede.dlinDF = rede.dlinDF.astype(
         {
-            "da_barra": "int",
+            "da_barra": "Int64",
             "abertura_da_barra": "object",
             "operacao": "object",
             "abertura_para_barra": "object",
-            "para_barra": "int",
+            "para_barra": "Int64",
             "circuito": "object",
             "estado": "object",
             "proprietario": "object",
@@ -1937,10 +1937,10 @@ def dlin(rede: DadosRedePWF):
             "tap_minimo": "float",
             "tap_maximo": "float",
             "defasagem": "float",
-            "barra_controlada": "int",
+            "barra_controlada": "Int64",
             "capacidade_normal": "float",
-            "capacidade_em_emergencial": "float",
-            "numero_taps": "int",
+            "capacidade_em_emergencia": "float",
+            "numero_de_taps": "Int64",
             "capacidade_do_equipamento": "float",
             "agregador_1": "object",
             "agregador_2": "object",
@@ -1952,8 +1952,8 @@ def dlin(rede: DadosRedePWF):
             "agregador_8": "object",
             "agregador_9": "object",
             "agregador_10": "object",
-            "numero_de_unidades": "int",
-            "numero_de_unidades_em_operacao": "int"
+            "numero_de_unidades": "Int64",
+            "numero_de_unidades_em_operacao": "Int64"
         }
     )
     if rede.dlinDF.empty:
@@ -1985,26 +1985,26 @@ def dopc(rede: DadosRedePWF):
         
         else:
             try:
-                rede.dopc["opcao"].append(linha[:4])
-                rede.dopc["padrao"].append(linha[5])
-                rede.dopc["opcao"].append(linha[7:11])
-                rede.dopc["padrao"].append(linha[12])
-                rede.dopc["opcao"].append(linha[14:18])
-                rede.dopc["padrao"].append(linha[19])
-                rede.dopc["opcao"].append(linha[21:25])
-                rede.dopc["padrao"].append(linha[26])
-                rede.dopc["opcao"].append(linha[28:32])
-                rede.dopc["padrao"].append(linha[33])
-                rede.dopc["opcao"].append(linha[35:39])
-                rede.dopc["padrao"].append(linha[40])
-                rede.dopc["opcao"].append(linha[42:46])
-                rede.dopc["padrao"].append(linha[47])
-                rede.dopc["opcao"].append(linha[49:53])
-                rede.dopc["padrao"].append(linha[54])
-                rede.dopc["opcao"].append(linha[56:60])
-                rede.dopc["padrao"].append(linha[61])
-                rede.dopc["opcao"].append(linha[63:67])
-                rede.dopc["padrao"].append(linha[68])
+                rede.dopc["opcao"].append(linha[:4].strip())
+                rede.dopc["padrao"].append(linha[5].strip())
+                rede.dopc["opcao"].append(linha[7:11].strip())
+                rede.dopc["padrao"].append(linha[12].strip())
+                rede.dopc["opcao"].append(linha[14:18].strip())
+                rede.dopc["padrao"].append(linha[19].strip())
+                rede.dopc["opcao"].append(linha[21:25].strip())
+                rede.dopc["padrao"].append(linha[26].strip())
+                rede.dopc["opcao"].append(linha[28:32].strip())
+                rede.dopc["padrao"].append(linha[33].strip())
+                rede.dopc["opcao"].append(linha[35:39].strip())
+                rede.dopc["padrao"].append(linha[40].strip())
+                rede.dopc["opcao"].append(linha[42:46].strip())
+                rede.dopc["padrao"].append(linha[47].strip())
+                rede.dopc["opcao"].append(linha[49:53].strip())
+                rede.dopc["padrao"].append(linha[54].strip())
+                rede.dopc["opcao"].append(linha[56:60].strip())
+                rede.dopc["padrao"].append(linha[61].strip())
+                rede.dopc["opcao"].append(linha[63:67].strip())
+                rede.dopc["padrao"].append(linha[68].strip())
             except:
                 rede.dopc["opcao"] = rede.dopc["opcao"][:-1]
                 break 
@@ -2014,7 +2014,7 @@ def dopc(rede: DadosRedePWF):
     # DataFrame dos Dados de Constantes
     rede.dopcDF = DF(data=rede.dopc)
     rede.dopc = deepcopy(rede.dopcDF)
-    rede.dopcDF = rede.dopcDF.replace(r"^\s*$", None, regex=True)
+    rede.dopcDF = rede.dopcDF.replace(r"^\s*$", np.nan, regex=True)
     rede.dopcDF = rede.dopcDF.astype(
         {
             "opcao": "object",
@@ -2887,7 +2887,7 @@ class PosProcessadorPWF:
     def processar(cls, rede):
         
         # Carregamento do arquivo de configuração
-        ref_recurso = importlib.resources.files("Enline.parsers").joinpath(
+        ref_recurso = importlib.resources.files("EnlineDevEng.parsers").joinpath(
                         "pwf_config.yaml")
         
         with ref_recurso.open("r", encoding="utf-8") as f:
@@ -2914,8 +2914,8 @@ class PosProcessadorPWF:
         no df alvo.
         """
         nome_df_alvo = regra.get("df_alvo")
-        df_alvo       = getattr(rede, nome_df_alvo)
-        if df_alvo is None or df_alvo.empty:
+        df_alvo       = getattr(rede, nome_df_alvo, None)
+        if df_alvo is None or df_alvo is np.nan or df_alvo.empty:
             return 
         
         valores_padrao = regra.get("valores_padrao_merge")
@@ -2954,10 +2954,17 @@ class PosProcessadorPWF:
             ).drop(columns=col_chave_aux)
             
         except Exception:
-            for col_origem, col_destino in mapa.items():
-                valor_padrao = valores_padrao.get(col_origem)
-                df_alvo[col_origem] = valor_padrao 
-        
+            try: # quando a coluna já existe
+                for col_origem, col_destino in mapa.items():
+                    valor_padrao = valores_padrao.get(col_origem)
+                    mascara = df_alvo[col_origem].isna()
+                    df_alvo.loc[mascara, col_destino] = valor_padrao
+
+            except Exception:
+                for col_origem, col_destino in mapa.items():
+                    valor_padrao = valores_padrao.get(col_origem)
+                    df_alvo[col_destino] = valor_padrao
+                                    
         setattr(rede, nome_df_alvo, df_alvo)
     
     
@@ -2971,19 +2978,19 @@ class PosProcessadorPWF:
         """
         
         nome_df = regra.get("df_alvo")
-        df       = getattr(rede, nome_df)
-        if df is None or df.empty:
+        df       = getattr(rede, nome_df, None)
+        if df is None or df is np.nan or df.empty:
             return 
         
         
         valores_padrao = regra.get("valores_padrao_df_alvo")
         
-        # preenche os None com valor padrão
+        # preenche os np.nan com valor padrão
         for col, valor_padrao in valores_padrao.items():
             df[col] = df[col].fillna(valor_padrao)
             
         
-        for sub_regra in regra.get("regras_valores_padrao_df_alvo_tipo_1"):
+        for sub_regra in (regra.get("regras_valores_padrao_df_alvo_tipo_1") or []):
             chave_coluna = next(k for k in sub_regra.keys() if k.startswith("coluna_alvo"))
             col_alvo = sub_regra[chave_coluna]
             
@@ -2995,11 +3002,11 @@ class PosProcessadorPWF:
             valor_se_true = sub_regra["valor_se_verdadeiro"]
             valor_se_false = sub_regra["valor_se_falso"]
             
-            mascara = operador.eq(df[coluna_dependente], valor)
+            mascara = operator.eq(df[coluna_dependente], valor)
             df[col_alvo] = np.where(mascara, valor_se_true, valor_se_false)
             
         
-        for sub_regra in regra.get("regras_valores_padrao_df_alvo_tipo_2"):
+        for sub_regra in (regra.get("regras_valores_padrao_df_alvo_tipo_2") or []):
             chave_coluna = next(k for k in sub_regra.keys() if k.startswith("coluna_alvo"))
             col_alvo = sub_regra[chave_coluna]
             

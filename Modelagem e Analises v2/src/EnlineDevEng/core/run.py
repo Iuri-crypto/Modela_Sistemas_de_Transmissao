@@ -10,12 +10,16 @@ from EnlineDevEng.utils.auxiliary import EnlineDevEngNet
 
 
 
+# inicializações para funcionar a instanciação dinâmica
+from EnlineDevEng.parsers.pwf_parser import PWFNetworkParser
+
+
 
 
 def runpf(
-    net: EnlineDevEngNet,
-    dir_file: Union[str, Path, None] = None,
-    algorithm: str = "nr",
+    net       : EnlineDevEngNet        = None,
+    dir_file  : Union[str, Path, None] = None,
+    algorithm : str                    = "nr",
     **kwargs 
 ) -> Any:
     
@@ -23,7 +27,7 @@ def runpf(
     
     """
     
-    file_path = Path(r"{dir_file}")
+    file_path = Path(f"{dir_file}")
     
     
     # 1 - Se dir_file existir, então será carregado os dados do arquivo.
@@ -38,15 +42,15 @@ def runpf(
         # 1.3 - Leitura do arquivo
         parser.parse(net=net, filepath=file_path)
         
-        # 1.4 - Organiza os dados para modelagem
+        # 1.4 - Instancia o Modelador adequado
         file_builder = BaseNetworkFileBuilder.get_builder(file_path)
         
-        # 1.5 - Calcula Impedâncias, Admitâncias...
+        # 1.5 - Injeta os dados na estrutura de dataframe
         file_builder.network_build(net=net, ede=ede)
         
     
     # 2 - Calcula Impedâncias, Admitâncias...
-    grid_model = NetworkBuilder.build(net)
+    grid_model = NetworkBuilder.build(net=net, ede=ede)
     
     
     # 3 - Busca o solver (Newthon, Gauss, ...)

@@ -6,7 +6,9 @@ from EnlineDevEng.utils.network_structure import get_struture_dict
 
 
 def create_empty_network(
-    name: str = "", f_hz: float = 60.0, sn_mva: float = 100.0 
+    name: str | None = None,
+    f_hz: float = 60.0,
+    sn_mva: float = 100.0 
 ) -> EnlineDevEngNet:
     
     

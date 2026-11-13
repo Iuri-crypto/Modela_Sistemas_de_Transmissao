@@ -14,6 +14,8 @@ from EnlineDevEng.utils.auxiliary import EnlineDevEngNet
 class DadosRedePWF:
     """Dados da rede extraídos de um arquivo PWF."""
     
+    path_pwf:    Path 
+    
     codigos: Dict[str, bool] = field(default_factory=lambda: {
         "TITU": False, "DAGR": False, "DANC": False, "DARE": False, "DBAR": False, 
         "DBSH": False, "DCAR": False, "DCBA": False, "DCCV": False, "DCER": False, 
@@ -29,8 +31,7 @@ class DadosRedePWF:
     fim_bloco     = ("9999", "99999", "999999")
     comentario    = "("
             
-                        
-    path_pwf:    Path 
+                
     linhas: list[str] = field(default_factory=list)
     idx_linha: int = 0
     
@@ -62,7 +63,7 @@ class PWFNetworkParser(BaseNetworkParser):
                             encoding=encoding).splitlines()
         
         # Extração 
-        while self.rede.linhas[self.rede.idx_linha] != self.caractere_fim:
+        while self.rede.linhas[self.rede.idx_linha] != self.rede.caractere_fim:
             linha                  = self.rede.linhas[self.rede.idx_linha].strip()
             linha_atual_completa   = self.rede.linhas[self.rede.idx_linha][:]
             linha_proxima_completa = self.rede.linhas[self.rede.idx_linha + 1][:]

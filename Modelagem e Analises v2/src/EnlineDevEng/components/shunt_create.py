@@ -10,7 +10,7 @@ def create_shunt(
     net: EnlineDevEngNet,
     bus: int,
     q_mvar: float,
-    vn_kv: float | None = None,
+    vn: float | None = None,
     p_mw: float = 0.0,
     name: str | None = None,
     in_service: bool = True
@@ -39,7 +39,7 @@ def create_shunt(
     entries = {
         "bus": bus,
         "q_mvar": q_mvar,
-        "vn_kv": vn_kv,
+        "vn": vn,
         "p_mw": p_mw,
         "name": name,
         "in_service": in_service

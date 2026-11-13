@@ -6,7 +6,6 @@ EnlineDevEng: Biblioteca de Modelagem e Simulação de Redes de Transmissão
 
 __version__ = "0.1.0"
 
-
 from .components.network_create import create_empty_network
 from .components.bus_create import create_bus
 from .components.line_create import create_line
