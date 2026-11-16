@@ -2903,7 +2903,11 @@ class PosProcessadorPWF:
         regras_Individuais = config.get("regras_individuais")
         for regra in regras_Individuais:
             cls._regra_individual(rede, regra)
-        
+            
+            
+        regras_gerais = config.get("regras_gerais_2")
+        for regra in regras_gerais:
+            cls._regra_geral_2(rede, regra)
     
     
     @classmethod
@@ -2966,7 +2970,52 @@ class PosProcessadorPWF:
                     df_alvo[col_destino] = valor_padrao
                                     
         setattr(rede, nome_df_alvo, df_alvo)
-    
+        
+        
+        
+    @classmethod
+    def _regra_geral_2(cls, rede, regra: Dict[str, Any]):
+        """
+        Identifica barras controladas no DataFrame auxiliar (ex: dlinDF) apenas nos ramos
+        que possuem tap válido (não nulo e não vazio) e atualiza o tipo dessas barras
+        no DataFrame alvo (ex: dbarDF) para o valor especificado (ex: 'pqv').
+        """
+        if not isinstance(regra, dict):
+            return
+
+        nome_df_alvo = regra.get("df_alvo")
+        df_alvo = getattr(rede, nome_df_alvo, None)
+        if df_alvo is None or df_alvo is np.nan or df_alvo.empty:
+            return
+
+        nome_df_auxiliar = regra.get("df_auxiliar")
+        df_auxiliar = getattr(rede, nome_df_auxiliar, None)
+        if df_auxiliar is None or df_auxiliar is np.nan or df_auxiliar.empty:
+            return
+
+        col_num_alvo = regra["coluna_numero_df_alvo"]
+        col_tipo_alvo = regra["coluna_tipo_df_alvo"]
+        col_b_ctrl_aux = regra["coluna_barra_controlada_df_auxiliar"]
+        col_tap_aux = regra["coluna_tap_df_auxiliar"]
+        tipo_barra = regra["tipo_barra"]
+
+        # Filtra linhas onde o tap não é None/NaN nem vazio (cobre coluna numérica ou string)
+        tap_series = df_auxiliar[col_tap_aux]
+        mascara_tap_valido = tap_series.notna() & (tap_series.astype(str).str.strip() != "")
+
+        # Coleta os números únicos e válidos das barras controladas apenas nesses ramos
+        barras_controladas = (
+            df_auxiliar.loc[mascara_tap_valido, col_b_ctrl_aux]
+            .dropna()
+            .loc[lambda s: s != 0]
+            .unique()
+        )
+
+        # Filtra no df_alvo e substitui o tipo
+        mascara = df_alvo[col_num_alvo].isin(barras_controladas)
+        df_alvo.loc[mascara, col_tipo_alvo] = tipo_barra
+
+        setattr(rede, nome_df_alvo, df_alvo)
     
     
     
@@ -3025,6 +3074,22 @@ class PosProcessadorPWF:
             }
             
             df[col_alvo] = df[col_alvo].map(mapa_tipos_barra)
+            
+        
+        for sub_regra in (regra.get("regra_5") or []):
+            tapmin = sub_regra["coluna_tapmin"]
+            tapmax = sub_regra["coluna_tapmax"]
+            modo_de_controle = sub_regra["coluna_modo_de_controle"]
+            
+            mascara = df[tapmin].isna() | df[tapmax].isna()
+            df[modo_de_controle] = np.where(mascara, "M", df[modo_de_controle])
+            
+        
+        for sub_regra in (regra.get("regra_6") or []):
+            barra_controlada = sub_regra["coluna_barra_controlada"]
+            df[barra_controlada] = pd.to_numeric(df[barra_controlada], errors="coerce").abs().astype("UInt32")
+            
+                    
             
         setattr(rede, nome_df, df)
             

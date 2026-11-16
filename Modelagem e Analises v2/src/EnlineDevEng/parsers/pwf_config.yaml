@@ -58,12 +58,24 @@ regras_gerais:
     colunas_coletar:
       - tensao_minima: tensao_minima
       - tensao_maxima: tensao_maxima
+      - barra_controlada: barra_controlada_por_trafo
     valores_padrao_merge:
       tensao_minima: 0.8 # Adotado pelo Anarede
       tensao_maxima: 1.2 # Adotado pelo Anarede
       
 
+regras_gerais_2:
+  
+  # Adição de barras PQV (barra cuja tensão é controlada)
+  - df_alvo: "dbarDF"
+    df_auxiliar: "dlinDF"
+    coluna_numero_df_alvo: "numero"
+    coluna_tipo_df_alvo: "tipo"
+    coluna_barra_controlada_df_auxiliar: "barra_controlada"
+    coluna_tap_df_auxiliar: "tap"
+    tipo_barra: "pqv"
 
+    
 
 
 
@@ -169,6 +181,8 @@ regras_individuais:
         "0": "pq"
         "1": "pv"
         "2": "vt"
+  
+
 
 
 
@@ -374,6 +388,14 @@ regras_individuais:
         coluna_auxiliar: "capacidade_normal"
       - coluna_alvo_3: "capacidade_do_equipamento"
         coluna_auxiliar: "capacidade_normal"
+    regra_5:
+      - coluna_tapmin: "tap_minimo"
+        coluna_tapmax: "tap_maximo"
+        coluna_modo_de_controle: "modo_de_controle"
+    regra_6:
+      - coluna_barra_controlada: "barra_controlada"
+       
+
 
 
 

@@ -97,8 +97,8 @@ class NetworkBuilder(BaseNetworkBuilder):
             self.data.Ybus[k, m] += - akm * cmath.exp(-1j * Phikm) * y_km # Ykm 
             self.data.Ybus[m, k] += - akm * cmath.exp( 1j * Phikm) * y_km # Ymk 
 
-            self.data.Ybus[m, m] += 1j * bsh_km + akm**2 * y_km   # Ykk 
-            self.data.Ybus[k, k] += 1j * bsh_km + y_km            # Ymm 
+            self.data.Ybus[k, k] += 1j * bsh_km + akm**2 * y_km   # Ykk
+            self.data.Ybus[m, m] += 1j * bsh_km + y_km            # Ymm 
         
         
         # Contribuição dos Trafos
@@ -117,12 +117,13 @@ class NetworkBuilder(BaseNetworkBuilder):
             Phikm       = math.radians(Phikm)
             y_km        = 1.0 / complex(r_km, x_km)
             
+            akm         = 1.0 / akm
             self.data.Ybus[k, m] += - akm * cmath.exp(-1j * Phikm) * y_km # Ykm 
             self.data.Ybus[m, k] += - akm * cmath.exp( 1j * Phikm) * y_km # Ymk 
 
             
-            self.data.Ybus[m, m] += 1j * bsh_km + akm**2 * y_km   # Ykk 
-            self.data.Ybus[k, k] += 1j * bsh_km + y_km            # Ymm 
+            self.data.Ybus[k, k] += 1j * bsh_km + akm**2 * y_km   # Ykk
+            self.data.Ybus[m, m] += 1j * bsh_km + y_km            # Ymm 
         
         
         # Contribuição do Shunt de barra (capacitores/reatores -> FIXOS E CHAVEADOS APENAS!!!)

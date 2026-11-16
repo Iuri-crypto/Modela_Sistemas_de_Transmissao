@@ -66,10 +66,11 @@ class PWFInjectorBuilder(BaseNetworkFileBuilder):
         
         for _, dados in df.iterrows():
             
-            vn         = dados["tensao"]
-            numero     = dados["numero"]
-            tipo       = dados["tipo"]
-            in_service = dados["estado"]
+            vn               = dados["tensao"]
+            numero           = dados["numero"]
+            tipo             = dados["tipo"]
+            barra_controlada = dados["barra_controlada"]
+            in_service       = dados["estado"]
             
             # Barra em Operação
             in_service = True if in_service == "L" else False
@@ -80,6 +81,7 @@ class PWFInjectorBuilder(BaseNetworkFileBuilder):
                 vn=vn,
                 numero=numero,
                 tipo=tipo,
+                barra_controlada=barra_controlada,
                 in_service=in_service
             )
     
@@ -248,6 +250,7 @@ class PWFInjectorBuilder(BaseNetworkFileBuilder):
             tap_max    = dados["tap_maximo"]
             tap        = dados["tap"]
             num_taps   = dados["numero_de_taps"]
+            barra_controlada = dados["barra_controlada"]
             in_service = dados["estado"]
             
             if pd.isna(tap): continue
@@ -268,6 +271,7 @@ class PWFInjectorBuilder(BaseNetworkFileBuilder):
                 tap_max=tap_max,
                 tap_pos=tap,
                 num_taps=num_taps,
+                barra_controlada=barra_controlada,
                 in_service=in_service
             )
                     

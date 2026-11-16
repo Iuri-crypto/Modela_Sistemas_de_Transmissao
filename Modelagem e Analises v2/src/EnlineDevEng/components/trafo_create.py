@@ -18,6 +18,7 @@ def create_trafo(
     tap_max: float,
     num_taps: int,
     tap_pos: float,
+    barra_controlada: int,
     name: str | None = None,
     in_service: bool = True
 ):
@@ -70,6 +71,7 @@ def create_trafo(
         "tap_max": tap_max,
         "num_taps": num_taps,
         "tap_pos": tap_pos,
+        "barra_controlada": barra_controlada,
         "in_service": in_service
     }
     

@@ -13,6 +13,7 @@ def get_struture_dict() -> dict:
             "vn": "f8",
             'numero': "UInt32",
             'tipo': dtype(object),
+            'barra_controlada': "UInt32",
             "in_service": "bool",
         },
         
@@ -76,6 +77,7 @@ def get_struture_dict() -> dict:
             "tap_max": "f8",
             "num_taps": "f8",
             "tap_pos": "f8",
+            "barra_controlada": "UInt32",
             "in_service": "bool",
         },
         
