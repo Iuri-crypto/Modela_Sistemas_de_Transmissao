@@ -11,13 +11,14 @@ def get_struture_dict() -> dict:
         "bus": {
             "name": dtype(object),
             "vn": "f8",
-            'numero': "f8",
+            'numero': "UInt32",
+            'tipo': dtype(object),
             "in_service": "bool",
         },
         
         "load": {
             "name": dtype(object),
-            "bus": "u4",
+            "bus": "UInt32",
             "p_mw": "f8",
             "q_mvar": "f8",
             "const_z_p_percent": "f8",
@@ -29,7 +30,7 @@ def get_struture_dict() -> dict:
         
         "gen": {
             "name": dtype(object),
-            "bus": "u4",
+            "bus": "UInt32",
             "p_mw": "f8",
             "vm": "f8",
             "sn_mva": "f8",
@@ -37,7 +38,7 @@ def get_struture_dict() -> dict:
         },
         
         "shunt": {
-            "bus": "u4",
+            "bus": "UInt32",
             "name": dtype(object),
             "q_mvar": "f8",
             "p_mw": "f8",
@@ -47,15 +48,15 @@ def get_struture_dict() -> dict:
         
         "ext_grid": {
             "name": dtype(object),
-            "bus": "u4",
+            "bus": "UInt32",
             "vm_pu": "f8",
             "va_degree": "f8",
         },
         
         "line": {
             "name": dtype(object),
-            "from_bus": "u4",
-            "to_bus": "u4",
+            "from_bus": "UInt32",
+            "to_bus": "UInt32",
             "length_km": "f8",
             "r_percent": "f8",
             "x_percent": "f8",
@@ -65,8 +66,8 @@ def get_struture_dict() -> dict:
         
         "trafo": {
             "name": dtype(object),
-            "from_bus": "u4",
-            "to_bus": "u4",
+            "from_bus": "UInt32",
+            "to_bus": "UInt32",
             "r_percent": "f8",
             "x_percent": "f8",
             "b_percent": "f8",

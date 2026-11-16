@@ -376,6 +376,8 @@ class PWFNetworkParser(BaseNetworkParser):
         # Checa alteração do nível de carregamento
         # checkdanc(self.rede)
         
+        opcoespwf(self.rede)
+        
         # Tratamento dos dados
         PosProcessadorPWF().processar(rede=self.rede)
         

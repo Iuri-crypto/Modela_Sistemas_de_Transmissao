@@ -164,6 +164,11 @@ regras_individuais:
     regras_valores_padrao_df_alvo_tipo_2:
       - coluna_alvo_1: "barra_controlada"
         coluna_auxiliar: "numero"
+    regras_valores_padrao_df_alvo_tipo_3:
+      - coluna_alvo: "tipo"
+        "0": "pq"
+        "1": "pv"
+        "2": "vt"
 
 
 

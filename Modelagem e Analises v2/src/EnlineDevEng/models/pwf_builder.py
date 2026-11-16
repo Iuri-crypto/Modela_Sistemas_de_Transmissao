@@ -68,6 +68,7 @@ class PWFInjectorBuilder(BaseNetworkFileBuilder):
             
             vn         = dados["tensao"]
             numero     = dados["numero"]
+            tipo       = dados["tipo"]
             in_service = dados["estado"]
             
             # Barra em Operação
@@ -78,6 +79,7 @@ class PWFInjectorBuilder(BaseNetworkFileBuilder):
                 net=net,
                 vn=vn,
                 numero=numero,
+                tipo=tipo,
                 in_service=in_service
             )
     
@@ -98,6 +100,9 @@ class PWFInjectorBuilder(BaseNetworkFileBuilder):
             p_mw       = dados["carga_ativa"]
             q_mvar     = dados["carga_reativa"]
             in_service = dados["estado"]
+            tipo       = dados["tipo"]
+            
+            if tipo != "pq": continue
             
             # Carga em Operação ?
             in_service = True if in_service == "L" else False
@@ -126,10 +131,13 @@ class PWFInjectorBuilder(BaseNetworkFileBuilder):
                             
             bus        = dados["numero"]
             p_mw       = dados["geracao_ativa"]
-            vm         = dados["tensao_para_definicao_de_carga"]
+            vm         = dados["tensao"]
             in_service = dados["estado"]
             pf         = dados["fator_de_potencia_nominal"]
-                        
+            tipo       = dados["tipo"]
+                     
+            if tipo != "pv": continue
+            
             # Gerador em Operação ?
             in_service = True if in_service == "L" else False
             if not add_disable_elements and not in_service: continue
@@ -164,6 +172,8 @@ class PWFInjectorBuilder(BaseNetworkFileBuilder):
             q_mvar     = dados["capacitor_reator"]
             vn         = dados["tensao"]
             in_service = dados["estado"]
+            
+            if q_mvar == 0.0: continue
                     
             # Shunt em operação ?
             in_service = True if in_service == "L" else False

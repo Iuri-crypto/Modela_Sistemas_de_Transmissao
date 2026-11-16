@@ -3015,6 +3015,17 @@ class PosProcessadorPWF:
             mascara = df[col_alvo].isna()
             df[col_alvo] = np.where(mascara, df[col_auxiliar], df[col_alvo])
             
+        
+        for sub_regra in (regra.get("regras_valores_padrao_df_alvo_tipo_3") or []):
+            col_alvo = sub_regra["coluna_alvo"]
+            mapa_tipos_barra = {
+                int(k): v
+                for k, v in sub_regra.items()
+                if k != "coluna_alvo"
+            }
+            
+            df[col_alvo] = df[col_alvo].map(mapa_tipos_barra)
+            
         setattr(rede, nome_df, df)
             
             

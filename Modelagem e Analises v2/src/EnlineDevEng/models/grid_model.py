@@ -1,30 +1,47 @@
 
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 import numpy as np
-import scipy.sparse as sp
-from typing import Dict, Any 
+from scipy.sparse import dok_matrix, csr_matrix
+from typing import Dict, Optional
 
 
 
-@dataclass(slots=True, frozen=True)
+@dataclass(slots=True)
 class GridModel:
     
     """
-    Estrutura matemática imutável e vetorizada
-    contendo apenas os dados necessários para
-    os algoritmos numéricos.
+    Dados Elétricos no formato adequado
+    para o solver.
     """
     
-    Ybus: sp.csr_matrix       # Matriz de Admitância Nodal Esparsa
-    Sbus: np.ndarray          # Vetor de Potências Aparentes injetadas
-    V_theta: np.ndarray       # Vetor de tensões iniciais 
-    pv_idx: np.ndarray        # Índice numérico das barras PV
-    pq_idx: np.ndarray        # Índice numérico das barras PQ
-    slack_idx: int            # Índice da barra slack
-    bus_map: Dict[Any, int]   # Mapeamento do ID original da barra
+    Ybus     : Optional[dok_matrix] = None
+    Ybus_csr : Optional[csr_matrix] = None
+    S_esp    : Optional[np.ndarray] = None
+    v        : Optional[np.ndarray] = None
+    t        : Optional[np.ndarray] = None
+    tap      : Optional[np.ndarray] = None
+    bus_type : Optional[np.ndarray] = None     
+    
+    pv_idx   : Optional[np.ndarray] = None      # Índice numérico das barras PV
+    pq_idx   : Optional[np.ndarray] = None      # Índice numérico das barras PQ
+    vt_idx   : Optional[np.ndarray] = None      # Índice da barra slack
+    pqv_idx  : Optional[np.ndarray] = None      # indice numérico das barras com o controle de tap
+    
+    num_buses: Optional[np.ndarray] = None
+    
+    bus_map  : dict[int, int]       = field(default_factory=dict)
+    H        : np.ndarray           = field(default_factory=lambda: np.empty((0, 0), dtype=np.float64))
+    N        : np.ndarray           = field(default_factory=lambda: np.empty((0, 0), dtype=np.float64))
+    M        : np.ndarray           = field(default_factory=lambda: np.empty((0, 0), dtype=np.float64))
+    L        : np.ndarray           = field(default_factory=lambda: np.empty((0, 0), dtype=np.float64)) 
+    Q        : np.ndarray           = field(default_factory=lambda: np.empty((0, 0), dtype=np.float64))
+    R        : np.ndarray           = field(default_factory=lambda: np.empty((0, 0), dtype=np.float64))
     
     
-    @property
-    def num_buses(self) -> int:
-        return len(self.V_theta)
+    dP       : Optional[np.ndarray] = None      
+    dQ       : Optional[np.ndarray] = None      
+    
+    
+    
+    

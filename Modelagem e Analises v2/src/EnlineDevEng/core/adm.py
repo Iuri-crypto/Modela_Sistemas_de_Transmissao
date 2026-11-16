@@ -5,11 +5,8 @@
 
 from pathlib import Path 
 from abc import ABC, abstractmethod
-from typing import Dict, Type, Any, TYPE_CHECKING
+from typing import Dict, Type, Any
 
-if TYPE_CHECKING:
-    from EnlineDevEng.models.grid_model import GridModel
-    
 
 
 
@@ -20,7 +17,12 @@ class BaseNetworkBuilder(ABC):
     """
     
     @abstractmethod
-    def build(self, net: Any) -> GridModel:
+    def build(
+        self,
+        net: Any,
+        ede: Any,
+        data: Any
+    ):
         """
         Processa os dataframes crus e retorna o 
         GridModel limpo.
@@ -57,17 +59,17 @@ class BasePowerFlowSolver(ABC):
     
     
     @classmethod
-    def get_solver(cls, method: str, **kwargs) -> BasePowerFlowSolver:
+    def get_solver(cls, net: Any, method: str, **kwargs) -> BasePowerFlowSolver:
         """
         Instancia dinamicamente o solucionador solicitado
         via alias.
         """
         key = method.lower().replace("_", "").replace("-", "")
-        return cls._registry[key](**kwargs)
+        return cls._registry[key](net=net, **kwargs)
     
     
     @abstractmethod
-    def solve(self, grid: GridModel, **kwargs):
+    def solve(self, grid: Any, **kwargs):
         """
         "Toda classe de fluxo de potência que
         quiser existir neste sistema É OBRIGADA
