@@ -2,13 +2,15 @@
 
 from pathlib import Path
 from typing import Any, Union
-from .adm import BasePowerFlowSolver, BaseNetworkParser, BaseNetworkFileBuilder
-from EnlineDevEng.models.builder import NetworkBuilder
+
+
+from .adm                            import Base__PowerFlowSolver, Base__NetworkParser, Base__NetworkFileBuilder
+from EnlineDevEng.models.builder     import EletricModelsBuilder
+from EnlineDevEng.utils.auxiliary    import EnlineDevEngNet
+from EnlineDevEng.models.solver_data import SolverData
 import EnlineDevEng as ede 
-from EnlineDevEng.utils.auxiliary import EnlineDevEngNet
-from EnlineDevEng.models.grid_model import GridModel
-data = GridModel()
-#from EnlineDevEng.models.pwf_builder import 
+
+data = SolverData()
 
 
 
@@ -36,7 +38,7 @@ def runpf(
     if isinstance(file_path, Path):
         
         # 1.1 - Instancia o Parser.
-        parser = BaseNetworkParser.get_parser(file_path)
+        parser = Base__NetworkParser.get_parser(file_path)
         
         # 1.2 - Inicializar estrutura de dados
         net    = ede.create_empty_network()
@@ -45,18 +47,18 @@ def runpf(
         parser.parse(net=net, filepath=file_path)
         
         # 1.4 - Instancia o Modelador adequado
-        file_builder = BaseNetworkFileBuilder.get_builder(file_path)
+        file_builder = Base__NetworkFileBuilder.get_builder(file_path)
         
         # 1.5 - Injeta os dados na estrutura de dataframe
         file_builder.network_build(net=net, ede=ede)
         
     
     # 2 - Calcula Impedâncias, Admitâncias...
-    NetworkBuilder.build(net=net, ede=ede, data=data)
+    EletricModelsBuilder.build(net=net, ede=ede, data=data)
     
     
     # 3 - Busca o solver (Newthon, Gauss, ...)
-    solver = BasePowerFlowSolver.get_solver(net, algorithm, **kwargs)
+    solver = Base__PowerFlowSolver.get_solver(net, algorithm, **kwargs)
     
     
     # 4 - Executa a solução 

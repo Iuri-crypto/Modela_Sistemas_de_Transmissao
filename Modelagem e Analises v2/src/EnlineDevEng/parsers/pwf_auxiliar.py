@@ -2996,11 +2996,11 @@ class PosProcessadorPWF:
         col_num_alvo = regra["coluna_numero_df_alvo"]
         col_tipo_alvo = regra["coluna_tipo_df_alvo"]
         col_b_ctrl_aux = regra["coluna_barra_controlada_df_auxiliar"]
-        col_tap_aux = regra["coluna_tap_df_auxiliar"]
+        col_tap_min_aux = regra["coluna_tap_min_df_auxiliar"]
         tipo_barra = regra["tipo_barra"]
 
         # Filtra linhas onde o tap não é None/NaN nem vazio (cobre coluna numérica ou string)
-        tap_series = df_auxiliar[col_tap_aux]
+        tap_series = df_auxiliar[col_tap_min_aux]
         mascara_tap_valido = tap_series.notna() & (tap_series.astype(str).str.strip() != "")
 
         # Coleta os números únicos e válidos das barras controladas apenas nesses ramos

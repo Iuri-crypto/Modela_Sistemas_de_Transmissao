@@ -1,13 +1,13 @@
 
 
 from EnlineDevEng.utils.auxiliary import EnlineDevEngNet
-from EnlineDevEng.core.adm import BaseNetworkFileBuilder
+from EnlineDevEng.core.adm import Base__NetworkFileBuilder
 import EnlineDevEng 
 import pandas as pd
 from numpy import nan
 
 
-class PWFInjectorBuilder(BaseNetworkFileBuilder):
+class PWFInjectorBuilder(Base__NetworkFileBuilder):
     
     """
     Lê a estrutura 'net.DadosRede' (extraída pelo PWFNetworkParser)

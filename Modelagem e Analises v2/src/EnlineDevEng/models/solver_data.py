@@ -1,18 +1,17 @@
 
 
-from dataclasses import dataclass, field
-import numpy as np
+from dataclasses  import dataclass, field
 from scipy.sparse import dok_matrix, csr_matrix
-from typing import Dict, Optional
+from typing       import Optional
+import numpy as np
 
 
 
 @dataclass(slots=True)
-class GridModel:
+class SolverData:
     
     """
-    Dados Elétricos no formato adequado
-    para o solver.
+  
     """
     
     Ybus     : Optional[dok_matrix] = None
@@ -23,10 +22,10 @@ class GridModel:
     tap      : Optional[np.ndarray] = None
     bus_type : Optional[np.ndarray] = None     
     
-    pv_idx   : Optional[np.ndarray] = None      # Índice numérico das barras PV
-    pq_idx   : Optional[np.ndarray] = None      # Índice numérico das barras PQ
-    vt_idx   : Optional[np.ndarray] = None      # Índice da barra slack
-    pqv_idx  : Optional[np.ndarray] = None      # indice numérico das barras com o controle de tap
+    pv_idx   : Optional[np.ndarray] = None     
+    pq_idx   : Optional[np.ndarray] = None     
+    vt_idx   : Optional[np.ndarray] = None      
+    pqv_idx  : Optional[np.ndarray] = None      
     
     num_buses: Optional[np.ndarray] = None
     

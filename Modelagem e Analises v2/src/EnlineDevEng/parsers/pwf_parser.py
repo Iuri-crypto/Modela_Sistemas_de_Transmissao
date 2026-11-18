@@ -1,13 +1,16 @@
 
 
 
+
+from EnlineDevEng.core                 import Base__NetworkParser
+from EnlineDevEng.parsers.pwf_auxiliar import *
+from EnlineDevEng.utils.auxiliary      import EnlineDevEngNet
+
 from dataclasses import dataclass, field
 from pathlib import Path 
 from typing import Dict
-from EnlineDevEng.core import BaseNetworkParser
 
-from EnlineDevEng.parsers.pwf_auxiliar import *
-from EnlineDevEng.utils.auxiliary import EnlineDevEngNet
+
 
 
 @dataclass
@@ -38,7 +41,7 @@ class DadosRedePWF:
 
 
 
-class PWFNetworkParser(BaseNetworkParser):
+class PWFNetworkParser(Base__NetworkParser):
     """
     Parser para arquivos de rede no formato ANAREDE (.pwf)
     """

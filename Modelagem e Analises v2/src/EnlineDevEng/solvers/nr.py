@@ -1,16 +1,19 @@
 
 
-from EnlineDevEng.core.adm import BasePowerFlowSolver
-from typing import Any
-import numpy as np
-from math import sin, cos
-from scipy.sparse import bmat, csr_matrix, lil_matrix
+
+
+from EnlineDevEng.core.adm import Base__PowerFlowSolver
+
+
+from typing              import Any
+from math                import sin, cos
+from scipy.sparse        import bmat, csr_matrix, lil_matrix
 from scipy.sparse.linalg import spsolve
+import numpy as np    
 
 
 
-
-class NewthonRaphsonSolver(BasePowerFlowSolver):
+class NewthonRaphsonSolver(Base__PowerFlowSolver):
     aliases = ["nr"]
     
     def __init__(
@@ -122,7 +125,7 @@ class NewthonRaphsonSolver(BasePowerFlowSolver):
             t[idx_p] += dx[:len(idx_p)]
             v[idx_q] += dx[len(idx_p):]
             
-            if max(dM) < self.tolerancia:
+            if (max(dM) < self.tolerancia) or (iteration > self.maxiterations):
                 break 
         
     

@@ -4,13 +4,13 @@
 
 
 from pathlib import Path 
-from abc import ABC, abstractmethod
-from typing import Dict, Type, Any
+from abc     import ABC, abstractmethod
+from typing  import Dict, Type, Any
 
 
 
 
-class BaseNetworkBuilder(ABC):
+class Base__EletricModelsBuilder(ABC):
     
     """
     Interface abstrata para o modelador de rede.
@@ -25,14 +25,14 @@ class BaseNetworkBuilder(ABC):
     ):
         """
         Processa os dataframes crus e retorna o 
-        GridModel limpo.
+        SolverData limpo.
         """
         pass
     
     
     
     
-class BasePowerFlowSolver(ABC):
+class Base__PowerFlowSolver(ABC):
     
     """
     Clase base abstrata para todos os métodos de 
@@ -40,7 +40,7 @@ class BasePowerFlowSolver(ABC):
     """
     
     # Registro global dos métodos disponíveis
-    _registry: Dict[str, Type[BasePowerFlowSolver]] = {}
+    _registry: Dict[str, Type[Base__PowerFlowSolver]] = {}
     
     # Atributo que cada subclasse deve definir
     # Ex: ['nr']
@@ -59,7 +59,7 @@ class BasePowerFlowSolver(ABC):
     
     
     @classmethod
-    def get_solver(cls, net: Any, method: str, **kwargs) -> BasePowerFlowSolver:
+    def get_solver(cls, net: Any, method: str, **kwargs) -> Base__PowerFlowSolver:
         """
         Instancia dinamicamente o solucionador solicitado
         via alias.
@@ -84,14 +84,14 @@ class BasePowerFlowSolver(ABC):
     
 
 
-class BaseNetworkParser(ABC):
+class Base__NetworkParser(ABC):
     
     """
     Classe base abstrata para leitores linha por 
     linha de arquivos de rede.
     """
     
-    _registry: Dict[str, Type[BaseNetworkParser]] = {}
+    _registry : Dict[str, Type[Base__NetworkParser]] = {}
     extensions: list[str] = [] # Ex: ["pwf", "dss", ...]
     
     def __init_subclass__(cls, **kwargs):
@@ -107,7 +107,7 @@ class BaseNetworkParser(ABC):
             
     
     @classmethod
-    def get_parser(cls, file_path: Path) -> BaseNetworkParser:
+    def get_parser(cls, file_path: Path) -> Base__NetworkParser:
         """
         Instancia o parser adequado baseado na extensão
         do arquivo.
@@ -130,7 +130,7 @@ class BaseNetworkParser(ABC):
     
     
 
-class BaseNetworkFileBuilder(ABC):
+class Base__NetworkFileBuilder(ABC):
     """
     Classe abstrata responsável pela seleção
     de qual file_builder a ser usado 
@@ -146,7 +146,7 @@ class BaseNetworkFileBuilder(ABC):
              adequado para varrer as informações.
     """
     
-    _registry: Dict[str, Type[BaseNetworkFileBuilder]] = {}
+    _registry: Dict[str, Type[Base__NetworkFileBuilder]] = {}
     extensions: list[str] = []
     
     
@@ -163,7 +163,7 @@ class BaseNetworkFileBuilder(ABC):
             
     
     @classmethod
-    def get_builder(cls, file_path: Path) -> BaseNetworkFileBuilder:
+    def get_builder(cls, file_path: Path) -> Base__NetworkFileBuilder:
         """
         Instancia o modelador adequado baseado na extensão
         do arquivo. 

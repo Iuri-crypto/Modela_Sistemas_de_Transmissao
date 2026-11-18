@@ -32,25 +32,17 @@ class EnlineDevEngNet(ADict):
     load:     pd.DataFrame
     gen:      pd.DataFrame
     shunt:    pd.DataFrame
-    ext_grid: pd.DataFrame
     line:     pd.DataFrame
     trafo:    pd.DataFrame
     
     res_bus:      pd.DataFrame
-    res_ext_grid: pd.DataFrame
     res_line:     pd.DataFrame
     res_trafo:    pd.DataFrame
     res_load:     pd.DataFrame
     res_shunt:    pd.DataFrame
     res_gen:      pd.DataFrame
         
-    _empty_res_bus:      pd.DataFrame
-    _empty_res_ext_grid: pd.DataFrame
-    _empty_res_line:     pd.DataFrame
-    _empty_res_trafo:    pd.DataFrame
-    _empty_res_load:     pd.DataFrame
-    _empty_res_shunt:    pd.DataFrame
-    _empty_res_gen:      pd.DataFrame
+   
     
     name:   str 
     f_hz:   float 

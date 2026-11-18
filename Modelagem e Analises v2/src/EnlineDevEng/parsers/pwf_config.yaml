@@ -72,7 +72,7 @@ regras_gerais_2:
     coluna_numero_df_alvo: "numero"
     coluna_tipo_df_alvo: "tipo"
     coluna_barra_controlada_df_auxiliar: "barra_controlada"
-    coluna_tap_df_auxiliar: "tap"
+    coluna_tap_min_df_auxiliar: "tap_minimo"
     tipo_barra: "pqv"
 
     

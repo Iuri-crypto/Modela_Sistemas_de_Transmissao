@@ -1,17 +1,17 @@
 
 
-from typing import Any
-import pandas as pd
-from EnlineDevEng.core.adm import BaseNetworkBuilder
-
+from typing       import Any
 from scipy.sparse import dok_matrix
 import cmath 
 import numpy as np
 import math 
 
+from EnlineDevEng.core.adm import Base__EletricModelsBuilder
+
+
     
 
-class NetworkBuilder(BaseNetworkBuilder):
+class EletricModelsBuilder(Base__EletricModelsBuilder):
     
     """
     Lê os dataframes crus do objeto 'net', mapeia
