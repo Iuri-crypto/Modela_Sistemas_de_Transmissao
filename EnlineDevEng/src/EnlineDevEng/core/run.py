@@ -1,13 +1,14 @@
 
 
 from pathlib import Path
-from typing import Any, Union
+from typing  import Any, Union
 
 
-from .adm                            import Base__PowerFlowSolver, Base__NetworkParser, Base__NetworkFileBuilder
-from EnlineDevEng.models.builder     import EletricModelsBuilder
-from EnlineDevEng.utils.auxiliary    import EnlineDevEngNet
-from EnlineDevEng.models.solver_data import SolverData
+from .adm                               import Base__PowerFlowSolver, Base__NetworkParser, Base__NetworkFileBuilder
+from EnlineDevEng.models.builder        import EletricModelsBuilder
+from EnlineDevEng.utils.auxiliary       import EnlineDevEngNet
+from EnlineDevEng.models.solver_data    import SolverData
+from EnlineDevEng.analysis.subsystem__2 import Subsystem__2
 import EnlineDevEng as ede 
 
 data = SolverData()
@@ -16,7 +17,7 @@ data = SolverData()
 
 # inicializações para funcionar a instanciação dinâmica
 from EnlineDevEng.parsers.pwf_parser import PWFNetworkParser 
-from EnlineDevEng.solvers.nr import NewthonRaphsonSolver
+from EnlineDevEng.solvers.nr         import NewthonRaphsonSolver
 
 
 
@@ -65,7 +66,8 @@ def runpf(
     solver.solve()
     
     
-    # 5 - Armazena os dados em net
+    # 5 - Cálculo do Subsistema 2
+    Subsystem__2.calculator(net, formato="json", dir_output="")
     
     
     return net

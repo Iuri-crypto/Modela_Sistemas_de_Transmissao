@@ -28,6 +28,7 @@ class EnlineDevEngNet(ADict):
     """
     
     # Autocomplete 
+    # Dados Rede
     bus:      pd.DataFrame
     load:     pd.DataFrame
     gen:      pd.DataFrame
@@ -35,15 +36,24 @@ class EnlineDevEngNet(ADict):
     line:     pd.DataFrame
     trafo:    pd.DataFrame
     
-    res_bus:      pd.DataFrame
-    res_line:     pd.DataFrame
-    res_trafo:    pd.DataFrame
-    res_load:     pd.DataFrame
-    res_shunt:    pd.DataFrame
-    res_gen:      pd.DataFrame
-        
+    # Relatórios de Saída
+    RBAR:     pd.DataFrame
+    RLIN:     pd.DataFrame
+    DADB:     pd.DataFrame
+    DADL:     pd.DataFrame
+    RGER:     pd.DataFrame
+    RREF:     pd.DataFrame
+    RTRA:     pd.DataFrame
+    RLTC:     pd.DataFrame
+    RSHB:     pd.DataFrame
+    RBSH:     pd.DataFrame
+    RSIS:     pd.DataFrame
+    RARE:     pd.DataFrame
+    RTOT:     pd.DataFrame
+    RMIS:     pd.DataFrame
+    RGLT:     pd.DataFrame
    
-    
+    # Cts básicas
     name:   str 
     f_hz:   float 
     sn_mva: float 
