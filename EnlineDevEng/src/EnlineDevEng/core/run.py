@@ -8,7 +8,7 @@ from .adm                               import Base__PowerFlowSolver, Base__Netw
 from EnlineDevEng.models.builder        import EletricModelsBuilder
 from EnlineDevEng.utils.auxiliary       import EnlineDevEngNet
 from EnlineDevEng.models.solver_data    import SolverData
-from EnlineDevEng.analysis.subsystem__2 import Subsystem__2
+from EnlineDevEng.analysis.subsystem2 import Subsystem2
 import EnlineDevEng as ede 
 
 data = SolverData()
@@ -67,7 +67,8 @@ def runpf(
     
     
     # 5 - Cálculo do Subsistema 2
-    Subsystem__2.calculator(net, formato="json", dir_output="")
+    Subsystem2.calculator(net)
+    
     
     
     return net

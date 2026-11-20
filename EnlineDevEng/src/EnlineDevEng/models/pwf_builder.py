@@ -104,7 +104,7 @@ class PWFInjectorBuilder(Base__NetworkFileBuilder):
             in_service = dados["estado"]
             tipo       = dados["tipo"]
             
-            if tipo != "pq": continue
+            # if tipo not in ["pq", "pv"]: continue
             
             # Carga em Operação ?
             in_service = True if in_service == "L" else False
@@ -138,7 +138,7 @@ class PWFInjectorBuilder(Base__NetworkFileBuilder):
             pf         = dados["fator_de_potencia_nominal"]
             tipo       = dados["tipo"]
                      
-            if tipo != "pv": continue
+            # if tipo != "pv": continue
             
             # Gerador em Operação ?
             in_service = True if in_service == "L" else False

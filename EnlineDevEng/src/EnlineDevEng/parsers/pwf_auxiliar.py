@@ -11,7 +11,7 @@ import numpy as np
 
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
-    from pwf_parser import DadosRedePWF
+    from .pwf_parser import DadosRedePWF
 
 
 pd.set_option("future.no_silent_downcasting", True)
@@ -2908,6 +2908,7 @@ class PosProcessadorPWF:
         regras_gerais = config.get("regras_gerais_2")
         for regra in regras_gerais:
             cls._regra_geral_2(rede, regra)
+            
     
     
     @classmethod

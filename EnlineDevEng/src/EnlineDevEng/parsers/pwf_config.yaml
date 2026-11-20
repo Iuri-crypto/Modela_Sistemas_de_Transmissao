@@ -380,6 +380,7 @@ regras_individuais:
       numero_de_taps: 33
       numero_de_unidades: 1
       numero_de_unidades_em_operacao: 1
+      tap: 1
     regras_valores_padrao_df_alvo_tipo_1:
     regras_valores_padrao_df_alvo_tipo_2:
       - coluna_alvo_1: "barra_controlada"
