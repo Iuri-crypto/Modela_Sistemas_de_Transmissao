@@ -59,6 +59,7 @@ class EletricModelsBuilder(Base__EletricModelsBuilder):
         self.write_limits_q()     
         self.write_idx_p()
         self.write_idx_q()
+        self.write_limits_v()
                          
         
         # --- --- --- --- --- --- --- --- --- --- --- --- 
@@ -248,7 +249,10 @@ class EletricModelsBuilder(Base__EletricModelsBuilder):
     def write_idx_p(self):
         self.data.idx_p  = np.where(np.isin(self.data.bus_type, ['pq', 'pv']))[0].tolist()
 
-        
+
+    def write_limits_v(self):
+        self.data.v_min = self.net.bus["v_min"]
+        self.data.v_max = self.net.bus["v_max"]
         
     
         

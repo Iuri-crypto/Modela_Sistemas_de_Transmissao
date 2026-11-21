@@ -30,6 +30,8 @@ class SolverData:
     v_esp    : Optional[np.ndarray] = None 
     idx_q    : Optional[np.ndarray] = None
     idx_p    : Optional[np.ndarray] = None
+    v_min    : Optional[np.ndarray] = None 
+    v_max    : Optional[np.ndarray] = None 
     #pqv_idx  : Optional[np.ndarray] = None      
     
     num_buses: Optional[np.ndarray] = None

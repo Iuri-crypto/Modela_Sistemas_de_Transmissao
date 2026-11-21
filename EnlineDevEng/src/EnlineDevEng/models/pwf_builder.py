@@ -73,6 +73,8 @@ class PWFInjectorBuilder(Base__NetworkFileBuilder):
             in_service       = dados["estado"]
             q_min            = dados["geracao_reativa_minima"]
             q_max            = dados["geracao_reativa_maxima"]
+            v_min            = dados["limite_minimo"]
+            v_max            = dados["limite_maximo"]
             
             # Barra em Operação
             in_service = True if in_service == "L" else False
@@ -86,6 +88,8 @@ class PWFInjectorBuilder(Base__NetworkFileBuilder):
                 barra_controlada=barra_controlada,
                 q_min=q_min,
                 q_max=q_max,
+                v_min=v_min,
+                v_max=v_max,
                 in_service=in_service
             )
     

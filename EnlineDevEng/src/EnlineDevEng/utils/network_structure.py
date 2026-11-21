@@ -16,6 +16,8 @@ def get_struture_dict() -> dict:
             'barra_controlada': "UInt32",
             'q_min'           : "f8",
             'q_max'           : "f8",
+            'v_min'           : "f8",
+            'v_max'           : "f8",
             "in_service"      : "bool",
         },
         

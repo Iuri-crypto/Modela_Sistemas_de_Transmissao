@@ -14,6 +14,8 @@ def create_bus(
     barra_controlada: int,
     q_min: float,
     q_max: float,
+    v_min: float,
+    v_max: float,
     name: str | None = None,
     in_service: bool = True
 ):
@@ -37,5 +39,6 @@ def create_bus(
     
     entries = {"name": name, "vn": vn, "numero": numero, "tipo": tipo, 
                "barra_controlada": barra_controlada,
-               "q_min": q_min, "q_max": q_max, "in_service": in_service}
+               "q_min": q_min, "q_max": q_max, "v_min": v_min,
+               "v_max": v_max, "in_service": in_service}
     _set_entries(net, "bus", entries=entries)
