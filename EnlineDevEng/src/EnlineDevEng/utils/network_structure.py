@@ -14,6 +14,8 @@ def get_struture_dict() -> dict:
             'numero'          : "UInt32",
             'tipo'            : dtype(object),
             'barra_controlada': "UInt32",
+            'q_min'           : "f8",
+            'q_max'           : "f8",
             "in_service"      : "bool",
         },
         

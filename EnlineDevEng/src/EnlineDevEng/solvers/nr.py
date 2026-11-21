@@ -54,12 +54,22 @@ class NewthonRaphsonSolver(Base__PowerFlowSolver):
         B         = Ybus_csr.data.imag 
         P_esp     = S_esp.real 
         Q_esp     = S_esp.imag
-        idx_p     = np.where(np.isin(bus_type, ['pq', 'pv']))[0]
-        idx_q     = np.where(np.isin(bus_type, ['pq']))[0]
         
-    
+        idx_q     = self.net.data.idx_q
+        idx_p     = self.net.data.idx_p        
+        
+        q_min     = self.net.data.q_min
+        q_max     = self.net.data.q_max
+        v_esp     = self.net.data.v_esp
+        
+        bmva       = self.net.DadosRede.cte["BMVA"]
+        q_carga_pu = self.net.DadosRede.dbarDF["carga_reativa"].to_numpy(dtype=np.float64) / bmva
+        
+        iter_nr    = 0
+        iter_controle = 0
         
         for iteration in range(1, self.maxiterations + 1):
+            iter_nr = iteration
             
             for k in range(num_buses):   
                 inicio = indptr[k]
@@ -116,7 +126,7 @@ class NewthonRaphsonSolver(Base__PowerFlowSolver):
 
             J     = bmat([[csr_matrix(H_red), csr_matrix(N_red)],
                           [csr_matrix(M_red), csr_matrix(L_red)]],
-                    format='csr')
+                          format='csr')
             
             # Resolução do Sistema Linear J * dx = dM
             dx    = spsolve(J, dM)
@@ -125,14 +135,122 @@ class NewthonRaphsonSolver(Base__PowerFlowSolver):
             t[idx_p] += dx[:len(idx_p)]
             v[idx_q] += dx[len(idx_p):]
             
-            if (max(dM) < self.tolerancia) or (iteration > self.maxiterations):
-                break 
+            
+            # # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+            # #                              Monticelli - 6.3. Controle de tensão em barras PV [12]
+            # trocas_na_iteracao = self.controle_v_barras_pv(Q_esp, idx_q, bus_type, q_min, q_max, v, v_esp, q_carga_pu, bmva)
+            
+            # # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+                            
+            
+            # if trocas_na_iteracao > 0:
+            #     iter_controle += 1
+                
+                
+            # if ((np.max(np.abs(dM)) < self.tolerancia) and (trocas_na_iteracao == 0)) or (iteration > self.maxiterations):
+            #     break
+            
+            if (np.max(np.abs(dM)) < self.tolerancia) or (iteration > self.maxiterations):
+                trocas_na_iteracao = self.controle_v_barras_pv(
+                    Q_esp, idx_q, bus_type, q_min, q_max, v, v_esp, q_carga_pu, bmva
+                )
+                if trocas_na_iteracao == 0:
+                    break
         
     
     
     
+    def controle_v_barras_pv(
+        self,
+        Q_esp: np.ndarray,
+        idx_q: list[int], 
+        bus_type: np.ndarray, 
+        q_min: np.ndarray, 
+        q_max: np.ndarray,
+        v_cal: np.ndarray,
+        v_esp: np.ndarray,
+        q_carga_pu: np.ndarray,
+        bmva: float
+    ):
+        q_geracao_pu = self.q_cal(bmva)
+        trocas       = 0
+        
+        for idx in range(len(bus_type)):
+            if bus_type[idx] != "pv":
+                continue
+                
+            qcal_k = q_geracao_pu[idx]
+            qmin_k = q_min[idx]
+            qmax_k = q_max[idx]
+            vcal   = v_cal[idx]
+            vesp   = v_esp[idx]
+            
+            esta_como_pq = idx in idx_q
+            
+            # 1. BARRA OPERANDO COMO PV -> Verifica violação de limites de reativo
+            if not esta_como_pq:
+                if qcal_k < qmin_k:
+                    idx_q.append(idx)
+                    idx_q.sort()
+                    # Injeção líquida em p.u. = (Geração_min - Carga) 
+                    Q_esp[idx] = (qmin_k - q_carga_pu[idx]) 
+                    trocas     += 1
+                    
+                elif qcal_k > qmax_k:
+                    idx_q.append(idx)
+                    idx_q.sort()
+                    # Injeção líquida em p.u. = (Geração_max - Carga) 
+                    Q_esp[idx] = (qmax_k - q_carga_pu[idx]) 
+                    trocas     += 1
+            
+         
+            
+            # 2. BARRA SATURADA COMO PQ -> Verifica se pode voltar para PV
+            else:
+                travada_no_max = np.isclose(Q_esp[idx], (qmax_k - q_carga_pu[idx]))
+                travada_no_min = np.isclose(Q_esp[idx], (qmin_k - q_carga_pu[idx]))
+                
+                if travada_no_max and (vcal > vesp):
+                    idx_q.remove(idx)
+                    v_cal[idx] = vesp
+                    trocas     += 1
+                    
+                elif travada_no_min and (vcal < vesp):
+                    idx_q.remove(idx)
+                    v_cal[idx] = vesp
+                    trocas     += 1
+                    
+        return trocas     
+        
     
     
+    def q_cal(self, bmva):
+        data      = self.net.data
+        dbar      = self.net.DadosRede.dbarDF
+        
+        v_pu    = np.asarray(data.v, dtype=np.float64)
+        ang_rad = np.asarray(data.t, dtype=np.float64)
+        
+        v_complex = v_pu * np.exp(1j * ang_rad)
+        i_complex = data.Ybus_csr @ v_complex 
+        s_inj_pu = (v_complex * np.conj(i_complex)) 
+        
+        q_inj_pu         = s_inj_pu.imag 
+        q_carga_pu       = dbar["carga_reativa"].to_numpy(dtype=np.float64, copy=True) / bmva
+        q_shunt_nom_pu   = dbar["capacitor_reator"].to_numpy(dtype=np.float64, copy=True) / bmva
+        q_shunt_pu       = q_shunt_nom_pu * (v_pu ** 2)
+        
+        tipo_barra = dbar["tipo"].to_numpy()
+        
+        q_geracao_pu = dbar["geracao_reativa"].to_numpy(dtype=np.float64, copy=True)
+        
+        mask_pv = tipo_barra == "pv"
+        
+        q_geracao_pu[mask_pv] = (
+            q_inj_pu[mask_pv] + q_carga_pu[mask_pv] - q_shunt_pu[mask_pv]
+        )
+        return q_geracao_pu
+        
     
     
     def init_matrices(

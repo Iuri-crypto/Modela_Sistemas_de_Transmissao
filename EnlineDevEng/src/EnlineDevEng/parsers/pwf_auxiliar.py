@@ -2905,9 +2905,9 @@ class PosProcessadorPWF:
             cls._regra_individual(rede, regra)
             
             
-        regras_gerais = config.get("regras_gerais_2")
-        for regra in regras_gerais:
-            cls._regra_geral_2(rede, regra)
+        # regras_gerais = config.get("regras_gerais_2")
+        # for regra in regras_gerais:
+        #     cls._regra_geral_2(rede, regra)
             
     
     
@@ -3053,7 +3053,10 @@ class PosProcessadorPWF:
             valor_se_false = sub_regra["valor_se_falso"]
             
             mascara = operator.eq(df[coluna_dependente], valor)
-            df[col_alvo] = np.where(mascara, valor_se_true, valor_se_false)
+            df[col_alvo] = pd.Series(
+                np.where(mascara, valor_se_true, df[col_alvo]),
+                index=df.index
+            ).fillna(valor_se_false)
             
         
         for sub_regra in (regra.get("regras_valores_padrao_df_alvo_tipo_2") or []):

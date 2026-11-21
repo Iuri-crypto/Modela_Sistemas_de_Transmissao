@@ -79,7 +79,7 @@ class NewthonRaphsonSolver(BasePowerFlowSolver):
                     sin_dt = sin(dT)
                     cos_dt = cos(dT)
                     
-                    # Acumula P e Q calculados (inclui k == m, onde sin(0)=0 e cos(0)=1)
+                    # Acumula P e Q calculados 
                     P_calc_k += v[m] * (Gkm * cos_dt + Bkm * sin_dt)
                     Q_calc_k += v[m] * (Gkm * sin_dt - Bkm * cos_dt)
                     
@@ -125,7 +125,7 @@ class NewthonRaphsonSolver(BasePowerFlowSolver):
             t[idx_p] += dx[:len(idx_p)]
             v[idx_q] += dx[len(idx_p):]
             
-            if max(dM) < self.tolerancia:
+            if (max(dM) < self.tolerancia) or (iteration > self.maxiterations):
                 break 
         
     

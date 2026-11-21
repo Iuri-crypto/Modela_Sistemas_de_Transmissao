@@ -55,7 +55,11 @@ class EletricModelsBuilder(Base__EletricModelsBuilder):
         self.write_num_buses()
         self.write_vtheta_initial()
         self.write_S_esp()
-        self.write_bus_types()                                      
+        self.write_bus_types()            
+        self.write_limits_q()     
+        self.write_idx_p()
+        self.write_idx_q()
+                         
         
         # --- --- --- --- --- --- --- --- --- --- --- --- 
         # 1 - Montagem da Ybus
@@ -186,8 +190,9 @@ class EletricModelsBuilder(Base__EletricModelsBuilder):
     
     def write_vtheta_initial(
         self
-    ):
-        self.data.v = self.net.bus["vn"].to_numpy(dtype=float) / 1000
+    ):  
+        self.data.v_esp = self.net.bus["vn"].to_numpy(dtype=float) / 1000
+        self.data.v = self.data.v_esp.copy()
         self.data.t = np.zeros_like(self.data.v, dtype=float)
         
     def write_Ybus_initial(
@@ -228,7 +233,20 @@ class EletricModelsBuilder(Base__EletricModelsBuilder):
         S_esp = ((p_gen - p_load) + 1j * (q_gen - q_load)) / s_mva
         self.data.S_esp = S_esp
         
+        
+    def write_limits_q(self):
+        
+        s_mva           = self.net.DadosRede.cte["BMVA"]
+        self.data.q_min = self.net.bus["q_min"].to_numpy(dtype=float) / s_mva
+        self.data.q_max = self.net.bus["q_max"].to_numpy(dtype=float) / s_mva
+        
     
+    def write_idx_q(self):
+        self.data.idx_q  = np.where(np.isin(self.data.bus_type, ['pq']))[0].tolist()
+        
+    
+    def write_idx_p(self):
+        self.data.idx_p  = np.where(np.isin(self.data.bus_type, ['pq', 'pv']))[0].tolist()
 
         
         

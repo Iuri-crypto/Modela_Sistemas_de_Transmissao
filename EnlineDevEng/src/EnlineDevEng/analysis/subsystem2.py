@@ -37,13 +37,18 @@ class Subsystem2():
         cls.rbar(net)
         cls.rlin(net)
         
+        if not net.DadosRede.dgerDF.empty:
+            cls.rgel(net)
+        
         
         rbar : pd.DataFrame = net.RBAR
         rlin : pd.DataFrame = net.RLIN 
+        rgel : pd.DataFrame = net.RGEL
         
         if formato == "json":
             rbar.to_json(dir_output / "rbar.json", orient="records", indent=4, force_ascii=False)
             rlin.to_json(dir_output / "rlin.json", orient="records", indent=4, force_ascii=False)
+            rgel.to_json(dir_output / "rgel.json", orient="records", indent=4, force_ascii=False)
         
         
         
@@ -422,5 +427,83 @@ class Subsystem2():
 
         net.RLIN = df_rlin.astype(schema_rlin)
                 
-        
-        
+    
+    
+    @classmethod
+    def rgel(cls, net):
+        # : dict          = net.DadosRede.cte
+        dbar: pd.DataFrame = net.DadosRede.dbarDF
+        dger: pd.DataFrame = net.DadosRede.dgerDF
+        RBAR = net.RBAR
+        data               = net.data
+        bus_type           = data.bus_type
+        idx_q              = set(data.idx_q)
+        bus_map            = data.bus_map
+        inv_bus_map        = {v: k for k, v in bus_map.items()}
+
+
+        dbar_dict = dbar.set_index("numero").to_dict(orient="index")
+        dger_dict = dger.set_index("numero").to_dict(orient="index") 
+        RBAR_dict = RBAR.set_index("Número").to_dict(orient="index") 
+
+        linhas = []
+
+        for idx, btype in enumerate(bus_type):
+            if btype != "pv" or idx not in idx_q:
+                continue
+
+            num_barra = inv_bus_map[idx]
+            row_dbar  = dbar_dict[num_barra]
+            row_dger  = dger_dict.get(num_barra)
+            row_rbar  = RBAR_dict.get(num_barra)
+
+            v_pu    = row_rbar.get("Tensão (p.u.)")
+            ang_deg = row_rbar.get("Ângulo (graus)")
+            pg      = row_rbar.get("Geração Ativa (MW)")
+            pmin    = row_dger.get("geracao_ativa_minima")
+            pmax    = row_dger.get("geracao_ativa_maxima")
+
+            qg      = row_rbar.get("Geração Reativa (Mvar)")
+            qmin    = row_dbar["geracao_reativa_minima"]
+            qmax    = row_dbar["geracao_reativa_maxima"]
+
+            if np.isclose(pg, pmin, atol=1e-3): lim_ati = "I"
+            elif np.isclose(pg, pmax, atol=1e-3): lim_ati = "S"
+            else: lim_ati = ""
+
+            if np.isclose(qg, qmin, atol=1e-3): lim_rea = "I"
+            elif np.isclose(qg, qmax, atol=1e-3): lim_rea = "S"
+            else: lim_rea = ""
+
+            barra_cont = int(row_dbar["barra_controlada"])
+            parti_ger  = float(row_dger.get("fator_de_participacao", 0.0))
+
+            linhas.append({
+                "Número"                    : num_barra,
+                "Nome"                      : row_dbar["nome"],
+                "Tipo da Barra"             : -1,
+                "Tensão (p.u.)"             : v_pu,
+                "Ângulo (graus)"            : ang_deg,
+                "Geração Ativa Min (MW)"    : pmin,
+                "Geração Ativa (MW)"        : pg,
+                "Geração Ativa Max (MW)"    : pmax,
+                "Geração Reativa Min (Mvar)": qmin,
+                "Geração Reativa (Mvar)"    : qg,
+                "Geração Reativa Max (Mvar)": qmax,
+                "Limite Ativo (MW)"         : lim_ati,
+                "Limite Reativo (Mvar)"     : lim_rea,
+                "Participação Geração"      : parti_ger,
+                #"Participação Equivalente"  : 0.0,
+                "Barra Controlada"          : barra_cont,
+                #"Barra Controlada (MVA)"    : float(barra_cont),
+                "Estado Operativo"          : MAPA_ESTADO.get(row_dbar["estado"]),
+            })
+
+        df_rgel = pd.DataFrame(linhas)
+
+        if not df_rgel.empty:
+            cols_float = df_rgel.select_dtypes(include="float").columns
+            df_rgel[cols_float] = df_rgel[cols_float].map(r)
+
+        net.RGEL = df_rgel
+                    
