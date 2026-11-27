@@ -22,7 +22,9 @@ class SolverData:
     tap      : Optional[np.ndarray] = None
     bus_type : Optional[np.ndarray] = None     
     
-    pv_idx   : Optional[np.ndarray] = None     
+    pv_idx   : Optional[np.ndarray] = None  
+    pq_lim_v_idx : Optional[np.ndarray] = None   
+    pv_lim_q_idx : Optional[np.ndarray] = None 
     pq_idx   : Optional[np.ndarray] = None     
     vt_idx   : Optional[np.ndarray] = None      
     q_min    : Optional[np.ndarray] = None

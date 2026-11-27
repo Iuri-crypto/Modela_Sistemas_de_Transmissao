@@ -177,10 +177,12 @@ class EletricModelsBuilder(Base__EletricModelsBuilder):
     def write_bus_types(
         self
     ):
-        self.data.bus_type = self.net.bus["tipo"]
-        self.data.pq_idx = self.net.bus.loc[self.net.bus["tipo"] == "pq", "numero"].to_numpy(dtype=int)
-        self.data.pv_idx = self.net.bus.loc[self.net.bus["tipo"] == "pv", "numero"].to_numpy(dtype=int)
-        self.data.vt_idx = self.net.bus.loc[self.net.bus["tipo"] == "vt", "numero"].to_numpy(dtype=int)
+        self.data.bus_type     = self.net.bus["tipo"]
+        self.data.pq_idx       = self.net.bus.loc[self.net.bus["tipo"] == "pq", "numero"].to_numpy(dtype=int)
+        self.data.pq_lim_v_idx = self.net.bus.loc[self.net.bus["tipo"] == "pq_lim_v", "numero"].to_numpy(dtype=int).tolist()
+        self.data.pv_idx       = self.net.bus.loc[self.net.bus["tipo"] == "pv", "numero"].to_numpy(dtype=int)
+        self.data.vt_idx       = self.net.bus.loc[self.net.bus["tipo"] == "vt", "numero"].to_numpy(dtype=int)
+        self.data.pv_lim_q_idx = self.net.bus.loc[self.net.bus["tipo"] == "pv", "numero"].to_numpy(dtype=int)
         
     
     def write_num_buses(
@@ -228,7 +230,7 @@ class EletricModelsBuilder(Base__EletricModelsBuilder):
 
         geradores = self.net.gen
         np.add.at(p_gen, geradores["bus"].to_numpy(dtype=int), geradores["p_mw"].to_numpy(dtype=float))
-        # np.add.at(q_gen, geradores["bus"].to_numpy(dtype=int), geradores["q_mvar"].to_numpy(dtype=float))
+        np.add.at(q_gen, geradores["bus"].to_numpy(dtype=int), geradores["q_mvar"].to_numpy(dtype=float))
 
         # Potência complexa líquida em pu
         S_esp = ((p_gen - p_load) + 1j * (q_gen - q_load)) / s_mva
@@ -243,11 +245,11 @@ class EletricModelsBuilder(Base__EletricModelsBuilder):
         
     
     def write_idx_q(self):
-        self.data.idx_q  = np.where(np.isin(self.data.bus_type, ['pq']))[0].tolist()
+        self.data.idx_q  = np.where(np.isin(self.data.bus_type, ['pq', 'pq_lim_v']))[0].tolist()
         
     
     def write_idx_p(self):
-        self.data.idx_p  = np.where(np.isin(self.data.bus_type, ['pq', 'pv']))[0].tolist()
+        self.data.idx_p  = np.where(np.isin(self.data.bus_type, ['pq', 'pv', 'pq_lim_v']))[0].tolist()
 
 
     def write_limits_v(self):

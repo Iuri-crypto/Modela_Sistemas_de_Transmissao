@@ -37,6 +37,7 @@ def get_struture_dict() -> dict:
             "name": dtype(object),
             "bus": "UInt32",
             "p_mw": "f8",
+            "q_mvar": "f8",
             "vm": "f8",
             "sn_mva": "f8",
             "in_service": "bool",

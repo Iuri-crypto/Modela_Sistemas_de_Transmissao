@@ -10,6 +10,7 @@ def create_gen(
     net: EnlineDevEngNet,
     bus: int,
     p_mw: float,
+    q_mvar: float,
     name: str | None = None,
     vm  : float = 1000.0,
     sn_mva: float | None = None,
@@ -44,6 +45,7 @@ def create_gen(
         "name": name, 
         "bus": bus,
         "p_mw": p_mw,
+        "q_mvar": q_mvar,
         "vm": vm,
         "sn_mva": sn_mva,
         "in_service": in_service

@@ -2934,15 +2934,15 @@ class PosProcessadorPWF:
             col_chave_alvo = regra["coluna_merge_alvo"]
             col_chave_aux  = regra["coluna_merge_auxiliar"]
             
-            cols_aux = [col for col in mapa.keys()
+            cols_aux_ = [col for col in mapa.keys()
                         if col in df_aux.columns]
             
-            cols_aux = list(set(cols_aux + col_chave_aux))
+            cols_aux = list(set(cols_aux_ + [col_chave_aux]))
             
-            df_aux = df_aux[cols_aux].drop_duplicates(subset=[col_chave_aux])
+            df_aux = df_aux[cols_aux]
             
             dic_renomeiar = {}
-            for col_origem in cols_aux:
+            for col_origem in cols_aux_:
                 col_destino = mapa[col_origem]
                 valor_padrao = valores_padrao.get(col_origem)
                 df_aux[col_origem] = df_aux[col_origem].fillna(valor_padrao)
@@ -2950,26 +2950,37 @@ class PosProcessadorPWF:
             
             df_aux.rename(columns=dic_renomeiar, inplace=True)
             
-            df_alvo = pd.merge(
-                df_alvo,
-                df_aux,
-                left_on=col_chave_alvo,
-                right_on=col_chave_aux,
-                how="left"
-            ).drop(columns=col_chave_aux)
             
-        except Exception:
-            try: # quando a coluna já existe
-                for col_origem, col_destino in mapa.items():
-                    valor_padrao = valores_padrao.get(col_origem)
-                    mascara = df_alvo[col_origem].isna()
-                    df_alvo.loc[mascara, col_destino] = valor_padrao
-
-            except Exception:
-                for col_origem, col_destino in mapa.items():
-                    valor_padrao = valores_padrao.get(col_origem)
-                    df_alvo[col_destino] = valor_padrao
-                                    
+            if col_chave_alvo == col_chave_aux:
+                df_alvo = pd.merge(
+                    df_alvo,
+                    df_aux,
+                    left_on=col_chave_alvo,
+                    right_on=col_chave_aux,
+                    how="left"
+                )
+                
+            else:
+                df_alvo = pd.merge(
+                    df_alvo,
+                    df_aux,
+                    left_on=col_chave_alvo,
+                    right_on=col_chave_aux,
+                    how="left"
+                ).drop(columns=col_chave_aux)
+                
+                
+            for col_origem, col_destino in mapa.items():
+                valor_padrao = valores_padrao.get(col_origem)
+                mascara = df_alvo[col_origem].isna()
+                df_alvo.loc[mascara, col_destino] = valor_padrao
+            
+        except Exception as e:
+          
+            for col_origem, col_destino in mapa.items():
+                valor_padrao = valores_padrao.get(col_origem)
+                df_alvo[col_destino] = valor_padrao
+                                
         setattr(rede, nome_df_alvo, df_alvo)
         
         

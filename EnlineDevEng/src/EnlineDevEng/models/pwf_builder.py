@@ -141,6 +141,7 @@ class PWFInjectorBuilder(Base__NetworkFileBuilder):
                             
             bus        = dados["numero"]
             p_mw       = dados["geracao_ativa"]
+            q_mvar     = dados["geracao_reativa"]
             vm         = dados["tensao"]
             in_service = dados["estado"]
             pf         = dados["fator_de_potencia_nominal"]
@@ -160,6 +161,7 @@ class PWFInjectorBuilder(Base__NetworkFileBuilder):
                 net=net,
                 bus=bus,
                 p_mw=p_mw,
+                q_mvar=q_mvar,
                 vm=vm,
                 sn_mva=sn_mva,
                 in_service=in_service
