@@ -31,8 +31,9 @@ include-package-data = true
 "EnlineDevEng.tests" = "tests"
 
 [tool.setuptools.packages.find]
-where = ["src"]
+where = ["src", "."]
 include = ["EnlineDevEng*"]
+exclude = ["src*"]
 
 [tool.setuptools.package-data]
 "EnlineDevEng.output" = ["*", "**/*"]
