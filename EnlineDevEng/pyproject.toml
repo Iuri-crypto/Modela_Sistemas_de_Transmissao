@@ -30,16 +30,17 @@ dev = [
 
 [tool.setuptools]
 include-package-data = true
+packages = [
+    "EnlineDevEng",
+    "EnlineDevEng.output",
+    "EnlineDevEng.tests",
+]
 
 [tool.setuptools.package-dir]
 EnlineDevEng = "src/EnlineDevEng"
 "EnlineDevEng.output" = "output"
 "EnlineDevEng.tests" = "tests"
 
-[tool.setuptools.packages.find]
-where = ["src", "."]
-include = ["EnlineDevEng*", "output*", "tests*"]
-
 [tool.setuptools.package-data]
-"EnlineDevEng.output" = ["*"]
-"EnlineDevEng.tests" = ["*"]
+"EnlineDevEng.output" = ["*", "**/*"]
+"EnlineDevEng.tests" = ["*", "**/*"]
