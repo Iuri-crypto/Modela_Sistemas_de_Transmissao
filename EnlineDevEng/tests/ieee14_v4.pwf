@@ -72,9 +72,8 @@ DGLT
 (G (Vmn) (Vmx) (Vmne (Vmxe
  2   .95  1.05   .95  1.05
 99999
-DCTR
-(Nf ) O (Nt ) Nc Vmin Vmax C M (Fmin) (Fmax) C ( Vsp) (Ext) Ns (IdCurvaPts)
-    4       7  1                 -30.    30. P 64.395  2157                     
-                     
-99999
+(DCTR
+((Nf ) O (Nt ) Nc Vmin Vmax C M (Fmin) (Fmax) C ( Vsp) (Ext) Ns (IdCurvaPts)
+( 2157    2147  1                 -30.    30. P 64.395  2157                                         
+(99999
 FIM
