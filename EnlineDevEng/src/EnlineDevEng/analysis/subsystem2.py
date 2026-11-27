@@ -1,6 +1,7 @@
 
 import pandas as pd 
 import numpy  as np
+import sys 
 from decimal import Decimal, ROUND_HALF_UP
 from pathlib import Path 
 
@@ -29,16 +30,31 @@ class Subsystem2():
         formato="json",
         dir_output: Path | str | None = None
     ):
+        # if dir_output is None:
+        #     PROJECT_ROOT = Path(__file__).resolve().parents[3]
+        #     dir_output   = PROJECT_ROOT / "output" / "reports"
+        #     dir_output.mkdir(parents=True, exist_ok=True)
+        
         if dir_output is None:
-            PROJECT_ROOT = Path(__file__).resolve().parents[3]
-            dir_output   = PROJECT_ROOT / "output" / "reports"
-            dir_output.mkdir(parents=True, exist_ok=True)
+            main_mod = sys.modules.get("__main__")
+            if main_mod is not None and getattr(main_mod, "__file__", None):
+                # Caso 1: Executado via script .py (ex: python testador.py)
+                base_dir = Path(main_mod.__file__).resolve().parent
+            else:
+                # Caso 2: Executado via Jupyter Notebook (.ipynb) ou terminal interativo
+                base_dir = Path.cwd().resolve()
+
+            dir_output = base_dir / "output" / "reports"
+        else:
+            dir_output = Path(dir_output).resolve()
+
+        dir_output.mkdir(parents=True, exist_ok=True)
                     
         
                     
         cls.rbar(net)
         cls.rlin(net)
-        cls.rtra(net)
+        #cls.rtra(net)
         
         
         if not net.DadosRede.dgerDF.empty:
@@ -51,14 +67,14 @@ class Subsystem2():
         rlin : pd.DataFrame = net.RLIN 
         rger : pd.DataFrame = net.RGER
         rgel : pd.DataFrame = net.RGEL
-        rtra : pd.DataFrame = net.RTRA
+        #rtra : pd.DataFrame = net.RTRA
         
         if formato == "json":
             rbar.to_json(dir_output / "rbar.json", orient="records", indent=4, force_ascii=False)
             rlin.to_json(dir_output / "rlin.json", orient="records", indent=4, force_ascii=False)
             rger.to_json(dir_output / "rger.json", orient="records", indent=4, force_ascii=False)
             rgel.to_json(dir_output / "rgel.json", orient="records", indent=4, force_ascii=False)
-            rtra.to_json(dir_output / "rtra.json", orient="records", indent=4, force_ascii=False)
+           # rtra.to_json(dir_output / "rtra.json", orient="records", indent=4, force_ascii=False)
         
         
         
