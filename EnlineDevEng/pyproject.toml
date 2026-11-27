@@ -19,9 +19,27 @@ dependencies = [
     "numpy>=1.22.0",
     "scipy>=1.8.0",
     "pandas>=1.4.0",
+    "pyyaml",
+    "pyarrow",
 ]
 
 [project.optional-dependencies]
 dev = [
     "pytest>=7.0.0",
 ]
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.package-dir]
+EnlineDevEng = "src/EnlineDevEng"
+"EnlineDevEng.output" = "output"
+"EnlineDevEng.tests" = "tests"
+
+[tool.setuptools.packages.find]
+where = ["src", "."]
+include = ["EnlineDevEng*", "output*", "tests*"]
+
+[tool.setuptools.package-data]
+"EnlineDevEng.output" = ["*"]
+"EnlineDevEng.tests" = ["*"]
