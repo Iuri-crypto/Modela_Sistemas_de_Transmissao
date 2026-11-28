@@ -1,7 +1,7 @@
 # Especificação de empacotamento do Python (PEP 517/518/621)
 
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools>=77.0.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -13,8 +13,7 @@ requires-python = ">=3.10"
 authors = [
     { name = "Iuri", email = "lorenzop0o9i8u7@gmail.com" }
 ]
-license = { text = "MIT" }
-
+license = "MIT"
 
 dependencies = [
     "numpy>=2.4.6",
@@ -31,6 +30,10 @@ dev = [
 [tool.setuptools]
 include-package-data = true
 
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["EnlineDevEng*"]
+
+
 [tool.setuptools.package-data]
 "EnlineDevEng" = ["*", "**/*"]
-"EnlineDevEng.tests" = ["*", "**/*"]
