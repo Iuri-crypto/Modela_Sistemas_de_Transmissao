@@ -25,7 +25,7 @@ python -m venv .venv
 
 Ative o ambiente virtual executando o comando correspondente ao seu sistema:
 
-* **Windows (PowerShell):**
+- **Windows (PowerShell):**
 
   ```powershell
   .\.venv\Scripts\Activate.ps1
@@ -36,12 +36,14 @@ Ative o ambiente virtual executando o comando correspondente ao seu sistema:
   ```powershell
   Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
   ```
-* **Windows (Prompt de Comando / CMD):**
+
+- **Windows (Prompt de Comando / CMD):**
 
   ```cmd
   .venv\Scripts\activate.bat
   ```
-* **Linux / macOS:**
+
+- **Linux / macOS:**
 
   ```bash
   source .venv/bin/activate
@@ -55,33 +57,63 @@ Ative o ambiente virtual executando o comando correspondente ao seu sistema:
 
 Com o `(.venv)` ativo, execute o comando de instalação diretamente do GitHub:
 
-* **Via HTTPS (pede usuário e token do GitHub):**
+- **Via HTTPS (recomendado para repositório público):**
 
   ```bash
-  pip install "git+https://github.com/Iuri-crypto/Modela_Sistemas_de_Transmissao.git#subdirectory=enlinedeveng"
+  pip install "git+[https://github.com/Iuri-crypto/Modela_Sistemas_de_Transmissao.git#subdirectory=EnlineDevEng](https://github.com/Iuri-crypto/Modela_Sistemas_de_Transmissao.git#subdirectory=EnlineDevEng)"
   ```
-* **Via SSH (para quem usa chave SSH configurada no GitHub):**
+
+- **Via SSH (para quem usa chave SSH configurada no GitHub):**
 
   ```bash
-  pip install "git+ssh://git@github.com/Iuri-crypto/Modela_Sistemas_de_Transmissao.git#subdirectory=enlinedeveng"
+  pip install "git+ssh://git@github.com/Iuri-crypto/Modela_Sistemas_de_Transmissao.git#subdirectory=EnlineDevEng"
   ```
-
 
 ---
 
-## Etapa 4: Baixar os arquivos de exemplo e abrir o VS Code
+## Etapa 4: Baixar apenas a pasta `tests/` e abrir o VS Code
 
-1. Baixe a pasta `tests/` deste repositório (contendo os arquivos para testar a biblioteca) e coloque dentro da pasta `test_enlinedeveng`.
-2. Ainda no terminal, com `(.venv)` ativo, abra o VS Code na pasta atual:
+1. Ainda dentro de `test_enlinedeveng`, execute os comandos abaixo para baixar somente a pasta `tests/` do repositório:
 
-```bash
-code .
-```
+   ```bash
+   git clone --filter=blob:none --no-checkout [https://github.com/Iuri-crypto/Modela_Sistemas_de_Transmissao.git](https://github.com/Iuri-crypto/Modela_Sistemas_de_Transmissao.git) temp_repo
+   cd temp_repo
+   git sparse-checkout set tests
+   git checkout main
+   ```
+
+2. Mova a pasta `tests/` para a raiz de `test_enlinedeveng` e remova a pasta temporária:
+
+   - **Windows (PowerShell):**
+     ```powershell
+     Move-Item -Path .\tests -Destination ..\tests
+     cd ..
+     Remove-Item -Recurse -Force .\temp_repo
+     ```
+
+   - **Windows (Prompt de Comando / CMD):**
+     ```cmd
+     move tests ..\tests
+     cd ..
+     rmdir /s /q temp_repo
+     ```
+
+   - **Linux / macOS:**
+     ```bash
+     mv tests ../tests
+     cd ..
+     rm -rf temp_repo
+     ```
+
+3. Com `(.venv)` ativo e a pasta `tests/` dentro de `test_enlinedeveng`, abra o VS Code:
+
+   ```bash
+   code .
+   ```
 
 ---
 
 ## Etapa 5: Executar o teste no VS Code
-
 
 ### Executando pelo terminal (`.py`)
 
@@ -98,5 +130,5 @@ python tests/main.py
 Quando houver atualizações no repositório, ative o `(.venv)` da sua pasta e execute:
 
 ```bash
-pip install --upgrade --force-reinstall "git+https://github.com/Iuri-crypto/Modela_Sistemas_de_Transmissao.git#subdirectory=enlinedeveng"
+pip install --upgrade --force-reinstall "git+[https://github.com/Iuri-crypto/Modela_Sistemas_de_Transmissao.git#subdirectory=EnlineDevEng](https://github.com/Iuri-crypto/Modela_Sistemas_de_Transmissao.git#subdirectory=EnlineDevEng)"
 ```
