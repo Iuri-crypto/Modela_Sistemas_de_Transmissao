@@ -71,8 +71,7 @@ Com o `(.venv)` ativo, execute o comando de instalação diretamente do GitHub:
 
 ## Etapa 4: Baixar os arquivos de exemplo e abrir o VS Code
 
-1. Baixe a pasta `tests/` deste repositório (contendo o notebook de teste e os arquivos `.pwf` de exemplo) e coloque dentro da pasta `test_enlinedeveng`. Esta pasta 'tests/' está neste caminho: 'teste_enlinedeveng\.venv\Lib\site-packages\EnlineDevEng\tests' ou se preferir pode
-   baixá-la diretamente do repositório do caminho: 'EnlineDevEng/tests'
+1. Baixe a pasta `tests/` deste repositório (contendo os arquivos para testar a biblioteca) e coloque dentro da pasta `test_enlinedeveng`.
 2. Ainda no terminal, com `(.venv)` ativo, abra o VS Code na pasta atual:
 
 ```bash
