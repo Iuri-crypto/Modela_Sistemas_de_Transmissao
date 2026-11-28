@@ -66,17 +66,10 @@ Com o `(.venv)` ativo, execute o comando de instalação diretamente do GitHub:
   pip install "git+ssh://git@github.com/Iuri-crypto/Modela_Sistemas_de_Transmissao.git#subdirectory=enlinedeveng"
   ```
 
-### Etapa 4: Instalar o suporte ao Jupyter Notebook
-
-Para executar o arquivo de teste `.ipynb` no VS Code, instale o `ipykernel` no mesmo ambiente virtual:
-
-```bash
-pip install ipykernel jupyter
-```
 
 ---
 
-## Etapa 5: Baixar os arquivos de exemplo e abrir o VS Code
+## Etapa 4: Baixar os arquivos de exemplo e abrir o VS Code
 
 1. Baixe a pasta `tests/` deste repositório (contendo o notebook de teste e os arquivos `.pwf` de exemplo) e coloque dentro da pasta `test_enlinedeveng`. Esta pasta 'tests/' está neste caminho: 'teste_enlinedeveng\.venv\Lib\site-packages\EnlineDevEng\tests' ou se preferir pode
    baixá-la diretamente do repositório do caminho: 'EnlineDevEng/tests'
@@ -88,7 +81,7 @@ code .
 
 ---
 
-## Etapa 6: Executar o teste no VS Code
+## Etapa 5: Executar o teste no VS Code
 
 
 ### Executando pelo terminal (`.py`)
